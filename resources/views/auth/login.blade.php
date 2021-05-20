@@ -1,24 +1,35 @@
 @extends('layouts.app')
+@section('title' , '登入')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
-
-                <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-9">
+                <div class="card">
+                    <div class="card-header">登入</div>
+                    <div class="card-body">
+                        {{Form::open([
+                               'method' => 'POST',
+                               'url' => 'login',
+                       ])}}
                         @csrf
 
                         <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+                            {{Form::label('' , 'Email(帳號)' , [
+                                 'for' => 'email',
+                                 'class' => 'col-md-4 col-form-label text-md-right',
+                             ])}}
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-
+                                {{Form::email('email' , old('email') ,[
+                                    'id' => 'email',
+                                    'class' => 'form-control'. ($errors->has('email') ? ' is-invalid' : null),
+                                    'required' => 'required',
+                                    'autocomplete' => 'email',
+                                    'autofocus' => 'autofocus',
+                                ])}}
                                 @error('email')
-                                    <span class="invalid-feedback" role="alert">
+                                <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
@@ -26,13 +37,19 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
+                            {{Form::label('','密碼',[
+                                'for' => 'password',
+                                'class' => 'col-md-4 col-form-label text-md-right',
+                            ])}}
                             <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-
+                                {{Form::password('password' ,[
+                                    'id' => 'password',
+                                    'class' => 'form-control'. ($errors->has('password') ? ' is-invalid' : null),
+                                    'required' => 'required',
+                                    'autocomplete' => 'current-password',
+                                ])}}
                                 @error('password')
-                                    <span class="invalid-feedback" role="alert">
+                                <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
@@ -42,32 +59,39 @@
                         <div class="form-group row">
                             <div class="col-md-6 offset-md-4">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-
-                                    <label class="form-check-label" for="remember">
-                                        {{ __('Remember Me') }}
-                                    </label>
+                                    {{Form::label(
+                                        '',
+                                        '記住'.Form::checkbox('remember' , 1 , old('remember') ? 'checked' : '' ,['id' => 'remember','class' => 'form-check-input']),
+                                        [
+                                            'for' => 'remember',
+                                            'class' => 'form-check-label mr-3',
+                                        ],
+                                        false
+                                    )}}
                                 </div>
                             </div>
                         </div>
 
                         <div class="form-group row mb-0">
                             <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Login') }}
-                                </button>
-
+                                {{Form::submit('登入',[
+                                    'class'=>'btn btn-primary'
+                                ])}}
                                 @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
-                                    </a>
+                                    {{Html::link(
+                                        route('password.request'),
+                                        '忘記密碼?',
+                                        ['class' => 'btn btn-link'],
+                                        null,
+                                        false
+                                    )}}
                                 @endif
                             </div>
                         </div>
-                    </form>
+                        {{Form::close()}}
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 @endsection
