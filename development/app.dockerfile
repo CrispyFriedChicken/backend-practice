@@ -29,10 +29,11 @@ RUN chown -R www-data:www-data \
         /var/www/storage \
         /var/www/bootstrap/cache
 
-
 RUN php artisan cache:clear
+RUN php artisan route:clear
+RUN php artisan config:clear
+RUN php artisan migrate
 #RUN php artisan optimize
-
 
 RUN  apt-get install -y libmcrypt-dev \
         libmagickwand-dev --no-install-recommends \
