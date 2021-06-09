@@ -24,7 +24,6 @@ window.flash = function(message,type) {
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 //共用
 Vue.component('vue-table', require('./components/common/Table').default);
-
 Vue.component('text-input', require('./components/common/input/TextInput').default);
 Vue.component('select-input', require('./components/common/input/SelectInput').default);
 Vue.component('input-error-message', require('./components/common/input/InputErrorMessage').default);
@@ -37,11 +36,6 @@ Vue.component('pagination', require('laravel-vue-pagination'));
 Vue.component('create-game', require('./components/game/GameCreate.vue').default);
 Vue.component('update-game', require('./components/game/GameUpdate.vue').default);
 Vue.component('list-game', require('./components/game/GameList.vue').default);
-//玩家維護
-Vue.component('create-player', require('./components/player/PlayerCreate.vue').default);
-Vue.component('update-player', require('./components/player/PlayerUpdate.vue').default);
-Vue.component('list-player', require('./components/player/PlayerList.vue').default);
-
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
