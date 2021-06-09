@@ -64,12 +64,12 @@ class CommonHelper
                     'subItems' => [
                         // 新增遊戲
                         [
-                            'url' => '',
+                            'url' => 'game/create',
                             'content' => '新增遊戲',
                         ],
                         // 遊戲一覽
                         [
-                            'url' => '',
+                            'url' => 'game/list',
                             'content' => '遊戲一覽',
                         ],
                     ],
