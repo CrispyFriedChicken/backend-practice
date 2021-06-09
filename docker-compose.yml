@@ -1,24 +1,27 @@
-#Feel free to change this to your choosing
 version: '2'
 services:
+# laravel app
   app:
-    #You'll use this name to refer to your container.
-    #i.e. if you'd want to close your container,
-    #you'll use this name to refer to it specifically.
-    #Also feel free to change it to your choosing.
-    container_name: laravel_test
-    #Used to build an image from a Dockerfile. Has the following additional options:
+    container_name: laravel_app
+    depends_on:
+      - "database"
     build:
-      #Docker uses this context (basically, where your laravel files reside) to reference any files within it.
-      #In this case, the ./ refers to the root laravel folder assuming that the docker-compose file is stored in your laravel root folder.
       context: ./
-      #docker images are built from Dockerfiles, which often contain additional commands that should be run inside the container.
-      #In this case, the dockerfile we use to build our app container.
-      #Also note that we have used development/app.dockerfile .
-      #This means that our docker file is located in a 'development' folder on the root of our laravel app.
       dockerfile: development/app.dockerfile
-    volumes:
-      - ./:/var/www/
+#    開發方便用
+#    volumes:
+#      - ./.phpstorm.meta.php:/var/www/.phpstorm.meta.php
+#      - ./_ide_helper.php:/var/www/_ide_helper.php
+#      - ./composer.json:/var/www/composer.json
+#      - ./composer.lock:/var/www/composer.lock
+#      - ./package.json:/var/www/package.json
+#      - ./package-lock.json:/var/www/package-lock.json
+#      - ./app:/var/www/app
+#      - ./config:/var/www/config
+#      - ./database:/var/www/database
+#      - ./public:/var/www/public
+#      - ./resources:/var/www/resources
+#      - ./routes:/var/www/routes
     env_file: '.env.prod'
     environment:
       - "DB_HOST=database"
@@ -27,20 +30,17 @@ services:
 # The Web Server
   web:
     container_name: nginx_server
+    depends_on:
+      - "app"
     build:
       context: ./
       dockerfile: development/web.dockerfile
     volumes:
     - ./storage/logs/:/var/log/nginx
-    #Here, we define the port in the host machine that our docker container will be listening on
-    #and the port on the virtual network created by docker during container deployment.\
-    #This can be easily visualised by understanding that the left side of the colon defines the host machines,
-    #therefore ports on the host machine and the right side of the colon the docker container,
-    #therefore the ports on the docker container.
+#    開發方便用
+#    - ./public/:/var/www/public
     ports:
     - 8990:80
-
-
 # The Database
   database:
     container_name: mysql_database
@@ -54,5 +54,16 @@ services:
       - "MYSQL_ROOT_PASSWORD=root"
     ports:
       - 8991:3306
+    # phpmyadmin
+  phpmyadmin:
+      depends_on:
+        - database
+      image: phpmyadmin/phpmyadmin
+      restart: always
+      ports:
+        - '8080:80'
+      environment:
+        PMA_HOST: mysql_database
+        MYSQL_ROOT_PASSWORD: root
 volumes:
   dbdata:

@@ -1,47 +1,28 @@
 FROM php:7.2-fpm
-
 COPY composer.lock composer.json /var/www/
-
-
 COPY database /var/www/database
-
-
-WORKDIR /var/www
-
-
-RUN apt-get update && apt-get -y install git && apt-get -y install zip
-
-
-#RUN curl https://getcomposer.org/installer > composer-setup.php \
-#    && php -r "if (hash_file('SHA384', 'composer-setup.php') === 'a5c698ffe4b8e849a443b120cd5ba38043260d5c4023dbf93e1558871f1f07f58274fc6f4c93bcfd858c6bd0775cd8d1') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;" \
-#    && ls -l \
-#    && sudo php composer-setup.php \
-#    && php -r "unlink('composer-setup.php');" \
-#    && php composer.phar install --no-dev --no-scripts \
-#    && rm composer.phar
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-
-
 COPY . /var/www
-
-
-RUN chown -R www-data:www-data \
-        /var/www/storage \
-        /var/www/bootstrap/cache
-
-RUN php artisan cache:clear
-RUN php artisan route:clear
-RUN php artisan config:clear
-RUN php artisan migrate
-#RUN php artisan optimize
-
-RUN  apt-get install -y libmcrypt-dev \
-        libmagickwand-dev --no-install-recommends \
-        && pecl install mcrypt-1.0.2 \
+WORKDIR /var/www
+RUN apt-get update
+RUN apt-get -y install git \
+                       zip \
+                       npm \
+                       libmcrypt-dev \
+                       libmagickwand-dev --no-install-recommends
+RUN  pecl install mcrypt-1.0.2 \
         && docker-php-ext-install pdo_mysql \
         && docker-php-ext-enable mcrypt
-
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 RUN mv .env.prod .env
-
-
-#RUN php artisan optimize
+RUN composer install
+RUN composer update
+RUN chown -R www-data:www-data /var/www
+RUN chmod -R 755 /var/www/storage
+RUN npm install npm@latest -g
+RUN npm install
+RUN npm run dev
+RUN php artisan optimize
+#RUN php artisan cache:clear
+#RUN php artisan route:clear
+#RUN php artisan config:clear
+#RUN php artisan migrate
