@@ -70,7 +70,7 @@ class MenuHelper
                 // 注單查詢
                 [
                     'id' => 'order',
-                    'url' => '',
+                    'url' => 'orders/list',
                     'content' => '<i class="fa fa-fw fa-search"></i> 注單查詢',
                     'option' => [],
                     'subItems' => [],

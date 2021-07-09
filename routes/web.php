@@ -32,6 +32,10 @@ Route::middleware('auth')->group(function () {
         Route::view('create', 'player.create');
         Route::view('update', 'player.update');
     });
+    //注單查詢
+    Route::group(['prefix' => 'orders'], function () {
+        Route::view('list', 'order.list');
+    });
 
     /*API Route*/
     Route::group(['prefix' => 'api'], function () {
@@ -48,6 +52,11 @@ Route::middleware('auth')->group(function () {
             Route::post('{uuid}', 'Api\PlayerController@update');
             Route::delete('{uuid}', 'Api\PlayerController@delete');
             Route::get('', 'Api\PlayerController@list');
+        });
+        //注單查詢
+        Route::group(['prefix' => 'orders'], function () {
+            Route::get('', 'Api\OrderController@list');
+            Route::get('summary', 'Api\OrderController@summary');
         });
     });
 });
