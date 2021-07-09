@@ -36,6 +36,10 @@ Route::middleware('auth')->group(function () {
     Route::group(['prefix' => 'orders'], function () {
         Route::view('list', 'order.list');
     });
+    //每日注單結算報表
+    Route::group(['prefix' => 'dailyOrderSummary'], function () {
+        Route::view('list', 'dailyOrderSummary.list');
+    });
 
     /*API Route*/
     Route::group(['prefix' => 'api'], function () {
@@ -57,6 +61,10 @@ Route::middleware('auth')->group(function () {
         Route::group(['prefix' => 'orders'], function () {
             Route::get('', 'Api\OrderController@list');
             Route::get('summary', 'Api\OrderController@summary');
+        });
+        //每日注單結算報表
+        Route::group(['prefix' => 'dailyOrderSummary'], function () {
+            Route::get('', 'Api\DailyOrderSummaryController@list');
         });
     });
 });

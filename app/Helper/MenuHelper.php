@@ -78,7 +78,7 @@ class MenuHelper
                 // 每日注單結算報表
                 [
                     'id' => 'dailyOrderSummary',
-                    'url' => '',
+                    'url' => 'dailyOrderSummary/list',
                     'content' => '<i class="fa fa-fw fa-bar-chart"></i> 每日注單結算報表',
                     'option' => [],
                     'subItems' => [],
