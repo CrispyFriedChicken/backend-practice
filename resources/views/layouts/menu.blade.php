@@ -1,3 +1,6 @@
+<?php
+use App\Helper\MenuHelper;
+?>
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" style="display: block;">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header mb-3">
@@ -22,7 +25,7 @@
     <div class="collapse navbar-collapse navbar-ex1-collapse">
         <ul class="nav navbar-nav side-nav mt-3">
             <?php
-            $menuList = \App\Helper\CommonHelper::getMenuList();
+            $menuList = MenuHelper::getMenuList();
             ?>
             @foreach($menuList as $firstLayer)
                 <li>
@@ -40,7 +43,9 @@
                             null,
                             false
                         )}}
-                        <ul id="{{$firstLayer['id']}}" class="collapse">
+                        <ul id="{{$firstLayer['id']}}"
+                            class="{{MenuHelper::checkIsFirstLayerActive($firstLayer) ? 'collapse in show' : 'collapse'}}"
+                            {{MenuHelper::checkIsFirstLayerActive($firstLayer) ? 'aria-expanded="true"' : ''}}>
                             {{--第二層--}}
                             @foreach($firstLayer['subItems'] as $subItem)
                                 <li>

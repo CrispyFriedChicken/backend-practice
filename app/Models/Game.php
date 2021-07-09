@@ -7,6 +7,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Webpatser\Uuid\Uuid;
 
@@ -19,9 +20,13 @@ use Webpatser\Uuid\Uuid;
  * @property string $englishName
  * @property string $code
  * @property string $type
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
+ * @property Carbon|null $createdAt
+ * @property Carbon|null $updatedAt
+ * @property Collection|Order[] $orders
+ * @property Collection|UserGame[] $user_games
  * @package App\Models
+ * @property-read int|null $orders_count
+ * @property-read int|null $user_games_count
  * @method static \Illuminate\Database\Eloquent\Builder|Game newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Game newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Game query()
@@ -37,8 +42,9 @@ use Webpatser\Uuid\Uuid;
  */
 class Game extends Model
 {
-	protected $table = 'games';
 
+    const CREATED_AT = 'createdAt';
+    const UPDATED_AT = 'updatedAt';
     /**
      *  Setup model event hooks
      */
@@ -49,11 +55,30 @@ class Game extends Model
             $model->uuid = (string) Uuid::generate(4);
         });
     }
+	protected $table = 'games';
+
+	protected $dates = [
+		'createdAt',
+		'updatedAt'
+	];
+
 	protected $fillable = [
 		'uuid',
 		'chineseName',
 		'englishName',
 		'code',
-		'type'
+		'type',
+		'createdAt',
+		'updatedAt'
 	];
+
+	public function orders()
+	{
+		return $this->hasMany(Order::class, 'gameUuid', 'uuid');
+	}
+
+	public function user_games()
+	{
+		return $this->hasMany(UserGame::class, 'gameUuid', 'uuid');
+	}
 }

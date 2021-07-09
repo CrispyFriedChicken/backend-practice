@@ -20,6 +20,7 @@ class GameResource extends JsonResource
             'englishName' => $this->englishName,
             'code' => $this->code,
             'type' => $this->type,
+            'showTitle' => "$this->code - $this->chineseName ( $this->englishName )",
         ];
     }
 }

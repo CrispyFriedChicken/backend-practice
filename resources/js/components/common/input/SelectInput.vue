@@ -1,7 +1,8 @@
 <template>
-    <select :id="name" class="form-control" :name="name" v-model="childValue" @change="sendToParent"
+    <select :id="name" class="form-control select2 " :name="name" v-model="childValue" @change="sendToParent" :multiple="multiple"
+            :style="style"
             :required="isRequired">
-        <option v-for="(key,val) in list" :value="val">
+        <option v-for="(key,val) in dropDownList" :value="val">
             {{ key }}
         </option>
     </select>
@@ -30,12 +31,15 @@ export default {
     },
     data() {
         return {
-            childValue: this.inputAttrs.hasOwnProperty('value') ? this.inputAttrs.value : '',
+            childValue: this.value,
             title: this.inputAttrs.hasOwnProperty('title') ? this.inputAttrs.title : '',
             name: this.inputAttrs.hasOwnProperty('name') ? this.inputAttrs.name : '',
-            placeHolder: this.inputAttrs.hasOwnProperty('placeHolder') ? this.inputAttrs.placeHolder : '請選擇',
+            placeholder: this.inputAttrs.hasOwnProperty('placeholder') && this.inputAttrs.placeholder ? this.inputAttrs.placeholder : '請選擇',
             isRequired: this.inputAttrs.hasOwnProperty('isRequired') ? this.inputAttrs.isRequired : false,
-            list: this.inputAttrs.hasOwnProperty('dropDownList') ? this.inputAttrs.dropDownList : {},
+            list: this.inputAttrs.hasOwnProperty('list') ? this.inputAttrs.list : {},
+            style: this.inputAttrs.hasOwnProperty('style') ? this.inputAttrs.style : '',
+            multiple: this.inputAttrs.hasOwnProperty('multiple') ? this.inputAttrs.multiple : false,
+            dropDownList: {},
         };
     },
     watch: {
@@ -44,7 +48,7 @@ export default {
         }
     },
     mounted() {
-        this.list = Object.assign({'': this.placeHolder}, this.list)
+        this.dropDownList = Object.assign({'': this.placeholder}, this.list);
     },
     methods: {
         sendToParent: function () {

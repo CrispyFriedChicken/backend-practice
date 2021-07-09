@@ -5,13 +5,11 @@
  */
 
 require('./bootstrap');
-
 window.Vue = require('vue');
 window.events = new Vue();
-window.flash = function(message,type) {
-    window.events.$emit('flash',message,type);
+window.flash = function (message, type) {
+    window.events.$emit('flash', message, type);
 }
-
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -20,22 +18,23 @@ window.flash = function(message,type) {
  * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
  */
 
-// const files = require.context('./', true, /\.vue$/i)
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 //共用
-Vue.component('vue-table', require('./components/common/Table').default);
+Vue.component('vue-table', require('./components/common/layout/Table').default);
 Vue.component('text-input', require('./components/common/input/TextInput').default);
 Vue.component('select-input', require('./components/common/input/SelectInput').default);
+Vue.component('date-input', require('./components/common/input/DateInput').default);
 Vue.component('input-error-message', require('./components/common/input/InputErrorMessage').default);
+Vue.component('input-remark-message', require('./components/common/input/InputRemarkMessage').default);
 Vue.component('input-row', require('./components/common/layout/FormInputRow').default);
-Vue.component('input-search', require('./components/common/layout/SearchInputColumn').default);
+Vue.component('search-input', require('./components/common/layout/SearchInput').default);
 Vue.component('submit-row', require('./components/common/layout/FormSubmitRow').default);
-Vue.component('flash', require('./components/layout/Flash').default);
+Vue.component('flash', require('./components/common/layout/Flash').default);
 Vue.component('pagination', require('laravel-vue-pagination'));
-//遊戲維護
-Vue.component('create-game', require('./components/game/GameCreate.vue').default);
-Vue.component('update-game', require('./components/game/GameUpdate.vue').default);
-Vue.component('list-game', require('./components/game/GameList.vue').default);
+Vue.component('search-condition', require('./components/common/layout/SearchCondition').default);
+Vue.component('bar-chart', require('./components/common/chart/BarChart').default);
+Vue.component('list-page', require('./components/common/page/ListPage').default);
+Vue.component('create-page', require('./components/common/page/CreatePage').default);
+Vue.component('update-page', require('./components/common/page/UpdatePage').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

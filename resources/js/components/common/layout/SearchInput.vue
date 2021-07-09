@@ -1,9 +1,9 @@
 <template>
-    <div :class="divClass + 'col-' + this.colCount">
+    <div>
         <span>{{ title }}</span>
-        <text-input v-if="this.inputType === 'text'" :inputAttrs="inputAttrs" v-on="$listeners"></text-input>
-        <select-input v-else-if="this.inputType === 'select'" :inputAttrs="inputAttrs"
-                      v-on="$listeners"></select-input>
+        <text-input v-if="this.inputType === 'text'" :inputAttrs="inputAttrs" v-model="value" v-on="$listeners"></text-input>
+        <select-input v-else-if="this.inputType === 'select'" :inputAttrs="inputAttrs" v-model="value" v-on="$listeners"></select-input>
+        <date-input v-else-if="this.inputType === 'date'" :inputAttrs="inputAttrs" v-model="value" v-on="$listeners"></date-input>
     </div>
 </template>
 
@@ -19,15 +19,9 @@ export default {
         },
         inputType: {
             type: String,
-            default: function () {
-                return {}
-            }
+            default: ''
         },
-        colCount: {
-            type: Number,
-            default: 4
-        },
-        divClass: {
+        value: {
             type: String,
             default: ''
         },
