@@ -15,15 +15,16 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('uuid', 40)->unique()->default('');
-            $table->string('name')->comment('名稱');
+            $table->string('uuid')->unique();
+            $table->string('name')->comment('玩家名稱');
             $table->string('role')->comment('角色');
-            $table->string('email')->unique()->comment('信箱(帳號)');
+            $table->string('email')->unique()->comment('玩家帳號(信箱)');
             $table->string('password')->comment('密碼');
             $table->string('currency')->default('')->comment('幣別');
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
-            $table->timestamps();
+            $table->timestamp('createdAt')->nullable();
+            $table->timestamp('updatedAt')->nullable();
         });
     }
 

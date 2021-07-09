@@ -26,6 +26,12 @@ Route::middleware('auth')->group(function () {
         Route::view('create', 'game.create');
         Route::view('update', 'game.update');
     });
+    //玩家維護
+    Route::group(['prefix' => 'players'], function () {
+        Route::view('list', 'player.list');
+        Route::view('create', 'player.create');
+        Route::view('update', 'player.update');
+    });
 
     /*API Route*/
     Route::group(['prefix' => 'api'], function () {
@@ -35,6 +41,13 @@ Route::middleware('auth')->group(function () {
             Route::post('{uuid}', 'Api\GameController@update');
             Route::delete('{uuid}', 'Api\GameController@delete');
             Route::get('', 'Api\GameController@list');
+        });
+        //玩家維護
+        Route::group(['prefix' => 'players'], function () {
+            Route::post('', 'Api\PlayerController@create');
+            Route::post('{uuid}', 'Api\PlayerController@update');
+            Route::delete('{uuid}', 'Api\PlayerController@delete');
+            Route::get('', 'Api\PlayerController@list');
         });
     });
 });
