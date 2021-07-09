@@ -26,10 +26,10 @@ class PlayerRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'max:255', 'email', "unique:users,email" . ($this->uuid ? ",{$this->uuid},uuid" : '')],
+            'name' => ['required', 'string', 'max:100'],
+            'email' => ['required', 'string', 'max:100', 'email', "unique:users,email" . ($this->uuid ? ",{$this->uuid},uuid" : '')],
             'password' => $this->uuid ? [] : ['required', 'string', 'min:8', 'confirmed'],
-            'currency' => ['required', 'string', 'max:255', Rule::in(array_keys(CurrencyEnum::getKeyValueMap()))]
+            'currency' => ['required', 'string', 'max:30', Rule::in(array_keys(CurrencyEnum::getKeyValueMap()))]
         ];
     }
 

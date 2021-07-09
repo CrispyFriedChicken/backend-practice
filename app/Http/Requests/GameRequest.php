@@ -26,9 +26,9 @@ class GameRequest extends FormRequest
     public function rules()
     {
         return [
-            'chineseName' => ['required', 'string', 'max:255', "unique:games,chineseName" . ($this->uuid ? ",{$this->uuid},uuid" : '')],
-            'englishName' => ['required', 'string', 'max:255', "unique:games,englishName" . ($this->uuid ? ",{$this->uuid},uuid" : '')],
-            'type' => ['required', 'string', 'max:255', Rule::in(array_keys(GameTypeEnum::getKeyValueMap()))]
+            'chineseName' => ['required', 'string', 'max:100', "unique:games,chineseName" . ($this->uuid ? ",{$this->uuid},uuid" : '')],
+            'englishName' => ['required', 'string', 'max:100', "unique:games,englishName" . ($this->uuid ? ",{$this->uuid},uuid" : '')],
+            'type' => ['required', 'string', 'max:30', Rule::in(array_keys(GameTypeEnum::getKeyValueMap()))]
         ];
     }
 

@@ -17,10 +17,10 @@ class CreateGamesTable extends Migration
             Schema::create('games', function (Blueprint $table) {
                 $table->id();
                 $table->string('uuid')->unique();
-                $table->string('chineseName')->default('')->unique()->comment('中文名稱');
-                $table->string('englishName')->default('')->unique()->comment('英文名稱');
-                $table->string('code')->default('')->unique()->comment('遊戲代號');
-                $table->string('type')->default('')->comment('遊戲類型');
+                $table->string('chineseName',100)->default('')->unique()->comment('中文名稱');
+                $table->string('englishName',100)->default('')->unique()->comment('英文名稱');
+                $table->string('code',10)->default('')->unique()->comment('遊戲代號');
+                $table->string('type',30)->default('')->comment('遊戲類型');
                 $table->timestamp('createdAt')->nullable();
                 $table->timestamp('updatedAt')->nullable();
             });
