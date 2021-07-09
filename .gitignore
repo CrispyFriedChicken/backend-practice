@@ -15,4 +15,5 @@ yarn-error.log
 .phpstorm.meta.php
 _ide_helper.php
 /app/Models/User.php
+/public/report/dailyOrderSummary
 public/js/app.js
