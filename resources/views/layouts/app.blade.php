@@ -34,8 +34,8 @@
                 {{--內容--}}
                 <div class="row">
                     <div class="col-sm-12 col-md-12" id="content">
-                        <div class="container ">
-                            <div class="col-md-9 pr-0 pl-0">
+                        <div class="container-fluid">
+                            <div class="offset-md-1 col-md-10 pr-0 pl-0">
                                 <h1>@yield('title')</h1>
                                 <div class="border rounded p-5">
                                     @yield('content')

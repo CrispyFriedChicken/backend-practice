@@ -3,21 +3,14 @@
 namespace App\Helper;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Request;
 
-class CommonHelper
+class MenuHelper
 {
     public static function getMenuList()
     {
         if (Auth::guest()) {
             $menuList = [
-                // 註冊
-                [
-                    'id' => 'store_list',
-                    'url' => 'register',
-                    'content' => '<i class="fa fa-fw fa-sign-in"></i> 註冊',
-                    'option' => [],
-                    'subItems' => [],
-                ],
                 // 登入
                 [
                     'id' => 'store_list',
@@ -32,7 +25,7 @@ class CommonHelper
                 // 首頁
                 [
                     'id' => 'home',
-                    'url' => '',
+                    'url' => 'home',
                     'content' => '<i class="fa fa-fw fa-home"></i> 首頁',
                     'option' => [],
                     'subItems' => [],
@@ -45,31 +38,31 @@ class CommonHelper
                     'subItems' => [
                         //新增玩家
                         [
-                            'url' => '',
+                            'url' => 'players/create',
                             'content' => '新增玩家',
                         ],
                         //玩家一覽
                         [
-                            'url' => '',
+                            'url' => 'players/list',
                             'content' => '玩家一覽',
                         ],
                     ],
                 ],
                 // 遊戲維護
                 [
-                    'id' => 'game',
+                    'id' => 'games',
                     'url' => '',
                     'content' => '<i class="fa fa-fw fa-gamepad"></i> 遊戲維護',
                     'option' => [],
                     'subItems' => [
                         // 新增遊戲
                         [
-                            'url' => 'game/create',
+                            'url' => 'games/create',
                             'content' => '新增遊戲',
                         ],
                         // 遊戲一覽
                         [
-                            'url' => 'game/list',
+                            'url' => 'games/list',
                             'content' => '遊戲一覽',
                         ],
                     ],
@@ -82,19 +75,13 @@ class CommonHelper
                     'option' => [],
                     'subItems' => [],
                 ],
-                // 報表分析
+                // 每日注單結算報表
                 [
-                    'id' => 'report',
+                    'id' => 'dailyOrderSummary',
                     'url' => '',
-                    'content' => '<i class="fa fa-fw fa-bar-chart"></i> 報表分析',
+                    'content' => '<i class="fa fa-fw fa-bar-chart"></i> 每日注單結算報表',
                     'option' => [],
-                    'subItems' => [
-                        // 每日注單結算報表
-                        [
-                            'url' => '',
-                            'content' => '每日注單結算報表',
-                        ],
-                    ],
+                    'subItems' => [],
                 ],
                 // 登出
                 [
@@ -102,12 +89,31 @@ class CommonHelper
                     'url' => '',
                     'content' => '<i class="fa fa-fw fa-sign-out"></i> 登出',
                     'option' => [
-                        'onclick' => 'javascript:$("#logout-form").submit();',
+                        'onclick' => 'javascript:flash("登出成功", "success");$("#logout-form").submit();',
                     ],
                     'subItems' => [],
                 ],
             ];
         }
         return $menuList;
+    }
+
+    public static function checkIsSecondLayerActive($subItem)
+    {
+        return $subItem['url'] ? strpos(Request::path(), $subItem['url']) !== false : false;
+    }
+
+    public static function checkIsFirstLayerActive($firstLayer)
+    {
+        $isFirstLayerActive = false;
+        if (isset($firstLayer['subItems']) && count($firstLayer['subItems'])) {
+            foreach ($firstLayer['subItems'] as $subItem) {
+                if (self::checkIsSecondLayerActive($subItem)) {
+                    $isFirstLayerActive = true;
+                }
+            }
+        }
+        return $isFirstLayerActive;
+
     }
 }

@@ -1,17 +1,8 @@
 @extends('layouts.app')
-
+@section('title' , '首頁')
 @section('content')
-    <div class="card">
-        <div class="card-header">{{ __('Dashboard') }}</div>
-
-        <div class="card-body">
-            @if (session('status'))
-                <div class="alert alert-success" role="alert">
-                    {{ session('status') }}
-                </div>
-            @endif
-
-            {{ __('You are logged in!') }}
-        </div>
-    </div>
+    <?php
+    $user = \Illuminate\Support\Facades\Auth::user();
+    ?>
+    歡迎回來，{{$user->name}}
 @endsection
