@@ -4,7 +4,7 @@
 
 use App\User;
 use Faker\Generator as Faker;
-use Illuminate\Support\Str;
+use Faker\Factory as Factory;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,12 +17,19 @@ use Illuminate\Support\Str;
 |
 */
 
-$factory->define(User::class, function (Faker $faker) {
+$factory->state(User::class, 'player', function () {
     return [
-        'name' => $faker->name,
-        'email' => $faker->unique()->safeEmail,
-        'email_verified_at' => now(),
-        'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-        'remember_token' => Str::random(10),
+        'role' => \App\Enum\UserRoleEnum::PLAYER,
+    ];
+});
+$factory->define(User::class, function (Faker $faker) {
+    $twFaker = Factory::create('zh_TW');
+    $enFaker = Factory::create('en');
+    return [
+        'uuid' => (string)Uuid::generate(4),
+        'name' => $twFaker->name,
+        'email' => $enFaker->unique()->email,
+        'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
+        'currency' => $twFaker->randomElement(array_keys(\App\Enum\CurrencyEnum::getKeyValueMap())), // password
     ];
 });
