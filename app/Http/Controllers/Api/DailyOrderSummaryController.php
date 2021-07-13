@@ -11,16 +11,6 @@ use Illuminate\Support\Facades\DB;
 class DailyOrderSummaryController extends Controller
 {
     /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
-    /**
      * 列出遊戲
      * @param Request $request
      * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection

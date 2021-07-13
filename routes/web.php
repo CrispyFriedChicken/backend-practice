@@ -12,14 +12,13 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-//Auth::routes();
+
+/*View Route*/
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login');
 Route::middleware('auth')->group(function () {
-    // Authentication Routes...
     Route::get('/home', 'HomeController@index')->name('home');
     Route::post('logout', 'Auth\LoginController@logout')->name('logout');
-    /*View Route*/
     //遊戲維護
     Route::group(['prefix' => 'games'], function () {
         Route::view('list', 'game.list');
@@ -40,9 +39,12 @@ Route::middleware('auth')->group(function () {
     Route::group(['prefix' => 'dailyOrderSummary'], function () {
         Route::view('list', 'dailyOrderSummary.list');
     });
+});
 
-    /*API Route*/
-    Route::group(['prefix' => 'api'], function () {
+/*API Route*/
+Route::post('/apiLogin', 'Api\LoginController@login');
+Route::group(['prefix' => 'api'], function () {
+    Route::middleware(['auth:sanctum'])->group(function () {
         //遊戲維護
         Route::group(['prefix' => 'games'], function () {
             Route::post('', 'Api\GameController@create');

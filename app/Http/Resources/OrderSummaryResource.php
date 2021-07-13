@@ -2,6 +2,8 @@
 
 namespace App\Http\Resources;
 
+use App\Enum\CurrencyEnum;
+use App\Enum\GameTypeEnum;
 use App\Models\DailyOrderSummary;
 use App\Models\Game;
 use App\Models\Round;
@@ -20,6 +22,9 @@ class OrderSummaryResource extends JsonResource
     public function toArray($request)
     {
         /* @var  $this DailyOrderSummary */
+        $typeKeyValueMap = array_merge(['all' => '全類別'], GameTypeEnum::getKeyValueMap());
+        $currencyKeyValueMap = CurrencyEnum::getKeyValueMap();
+        $dateString = date('Ymd', strtotime($this->transactionDate));
         return [
             'stake' => $this->stake,
             'winning' => $this->winning,
@@ -27,8 +32,8 @@ class OrderSummaryResource extends JsonResource
             'transactionDate' => $this->transactionDate,
             'orderCount' => $this->orderCount,
             'currency' => $this->currency,
-            'url' => url('report/dailyOrderSummary/' . "{$this->transactionDate}-{$this->type}-{$this->currency}" . '.csv'),
-            'showTitle' => "局號「 $this->transactionDate 」",
+            'url' => url("report/dailyOrderSummary/{$this->transactionDate}-{$this->type}-{$this->currency}.csv"),
+            'showTitle' => "{$dateString}-{$typeKeyValueMap[$this->type]}-{$currencyKeyValueMap[$this->currency]}-日結報表",
         ];
     }
 }
