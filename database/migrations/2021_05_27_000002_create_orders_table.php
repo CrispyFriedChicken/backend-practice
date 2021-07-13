@@ -21,7 +21,7 @@ class CreateOrdersTable extends Migration
                 $table->string('gameUuid')->nullable();
                 $table->foreign('userUuid')->references('uuid')->on('users');
                 $table->foreign('gameUuid')->references('uuid')->on('games');
-                $table->string('roundSerial', 20)->default('')->unique()->comment('局號');
+                $table->string('roundSerial', 20)->default('')->comment('局號');
                 $table->string('orderSerial', 20)->unique()->default('')->comment('注單編號');
                 $table->string('transactionDate', 24)->default('')->comment('下注時間');
                 $table->string('code', 10)->default('')->comment('遊戲代號');

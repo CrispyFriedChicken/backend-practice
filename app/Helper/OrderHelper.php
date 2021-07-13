@@ -50,6 +50,7 @@ class OrderHelper
             /* @var  $game Game */
             $game = Game::all()->random();
             $exchangeRate = $exchangeRateMap[$user->currency];
+            $roundSerial = SerialHelper::produce('round', date('Y-m-d', strtotime($currentDate)));
             while ($currentOrder <= $orders) {
                 $stake = rand(1, 10000);
                 $winning = rand(0, $stake);
@@ -57,8 +58,8 @@ class OrderHelper
                 $order->uuid = (string)Uuid::generate(4);
                 $order->userUuid = $user->uuid;
                 $order->gameUuid = $game->uuid;
+                $order->roundSerial = $roundSerial;
                 $order->orderSerial = SerialHelper::produce('order', date('Y-m-d', strtotime($currentDate)));
-                $order->roundSerial = SerialHelper::produce('round', date('Y-m-d', strtotime($currentDate)));
                 $order->transactionDate = $currentDate;
                 $order->currency = $user->currency;
                 $order->email = $user->email;

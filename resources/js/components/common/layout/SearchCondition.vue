@@ -1,6 +1,5 @@
 <template>
     <div class="row mb-4">
-        <!--        -->
         <div class="row col-12">
             <span v-if="meta.hasOwnProperty('total')">總共 {{ meta.total }} 筆</span>
             <span v-if="meta.hasOwnProperty('total') && meta.total > 1">，目前顯示第 {{ meta.from }} 筆到第 {{ meta.to }} 筆</span>

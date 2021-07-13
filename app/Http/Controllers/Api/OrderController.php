@@ -29,13 +29,19 @@ class OrderController extends Controller
         $this->addQueryConditions($query, $request);
         //排序
         if ($request->sortColumn && $request->sortBy) {
-            $query->orderBy($request->sortColumn, $request->sortBy);
+            $query = $query->orderBy($request->sortColumn, $request->sortBy);
         }
+        $query = $query->orderBy('roundSerial', 'asc');
         $query = $query->paginate();
         return OrderResource::collection($query);
     }
 
 
+    /**
+     * 根據條件計算總合併回傳相關結果文字
+     * @param Request $request
+     * @return array
+     */
     public function summary(Request $request)
     {
         $query = DB::table('orders');
@@ -80,7 +86,6 @@ class OrderController extends Controller
         $keyValueMap = array_merge(GameTypeEnum::getKeyValueMap(), ['total' => '總共']);
         $showTexts = [];
         foreach ($summary as $type => $currencys) {
-            $isShowText = false;
             $stakes = [];
             $winnings = [];
             $totalCount = 0;
@@ -89,11 +94,7 @@ class OrderController extends Controller
                 $winnings[] = $currency . '$ ' . number_format($info['winning']);
                 $totalCount += $info['orderCount'];
             }
-            if ($type == 'total') {
-                $isShowText = count($showTexts) > 1;
-            } else {
-                $isShowText = $totalCount > 0;
-            }
+            $isShowText = $type == 'total' ? count($showTexts) > 1 : $totalCount > 0;
             if ($isShowText) {
                 $showTexts[] = [
                     'title' => $keyValueMap[$type],
@@ -108,11 +109,17 @@ class OrderController extends Controller
         return $showTexts;
     }
 
+    /**
+     * 新增查詢條件
+     * @param $query
+     * @param $request
+     */
     protected function addQueryConditions(&$query, $request)
     {
         QueryHelper::addConditions($query, $request, [
             QueryHelper::FuzzySearch => [
-                ['requestName' => 'roundSerial', 'dbColumn' => 'serial'],
+                'roundSerial',
+                'orderSerial',
                 'email',
                 'code',
             ],

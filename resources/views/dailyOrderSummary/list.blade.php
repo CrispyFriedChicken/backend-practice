@@ -85,7 +85,7 @@
             'list' => \App\Enum\CurrencyEnum::getKeyValueMap(),
         ],
         [
-            'type' => 'text',
+            'type' => 'number',
             'title' => '總單量',
             'name' => 'orderCount',
         ],

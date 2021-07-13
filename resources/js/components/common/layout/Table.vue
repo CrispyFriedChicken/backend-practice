@@ -15,13 +15,14 @@
         <tbody>
         <tr v-for="(row,index) in sortData">
             <td v-for="column in tableOptions.columns"
-                :class="column.rowClass + (column.type === 'money' ? 'text-right' : '')"
+                :class="column.rowClass + (['money' , 'number'].includes(column.type) ? 'text-right' : '')"
                 :style="column.rowStyle" class="hiddenLongString">
                 <!--值-->
                 <span v-if="column.type === 'text'">{{
                         column.list ? column.list[row[column.name]] : row[column.name]
                     }}</span>
-                <span v-else-if="column.type === 'money'">{{ row[column.name] |money }}</span>
+                <span v-else-if="column.type === 'money'">{{ row[column.name] | money }}</span>
+                <span v-else-if="column.type === 'number'">{{ row[column.name] | number }}</span>
                 <!--連結-->
                 <a v-else-if="column.type === 'link'" :class="column.class" target="_blank" :href="row[column.name]">{{ column.text }}</a>
                 <!--按鈕-->
@@ -89,6 +90,9 @@ export default {
     filters: {
         money(value) {
             return '$ ' + new Intl.NumberFormat().format(value);
+        },
+        number(value) {
+            return new Intl.NumberFormat().format(value);
         }
     }
 }
