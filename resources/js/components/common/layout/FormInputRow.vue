@@ -43,12 +43,12 @@ export default {
             default: ''
         },
         remark: {
-            type: Array,
+            type: Object,
             default: function () {
-                let remarkArray = [];
-                remarkArray['class'] = 'alert alert-warning';
-                remarkArray['content'] = '';
-                return remarkArray;
+                return {
+                    class:'alert alert-warning',
+                    content:'',
+                };
             }
         },
     },

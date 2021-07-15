@@ -49,8 +49,12 @@
     $defaultFields = [
         'transactionDate' => \App\Models\DailyOrderSummary::max('transactionDate'),
     ];
+    $remark = [
+        'content' => '目前頁面上顯示的金額幣別皆為人民幣(其他幣別會以當天匯率換算成人民幣)',
+        'class' => 'ml-0 alert alert-warning',
+    ];
     ?>
-    <report-page :form-inputs='@json($formInputs)' :default-fields='@json($defaultFields)' url="report/barChart">
+    <report-page :form-inputs='@json($formInputs)' :default-fields='@json($defaultFields)' url="report/barChart" :remark='@json($remark,1)'>
 
     </report-page>
 @endsection

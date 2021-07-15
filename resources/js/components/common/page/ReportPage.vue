@@ -20,10 +20,21 @@
         </search-condition>
 
         <!--報表顯示-->
-        <div v-for="(reportSetting,index) in data">
-            <h2>{{ reportSetting['title'] }}</h2>
-            <bar-chart v-if="reportSetting['type'] === 'Bar'" :chartdata-setting="reportSetting['chartdata']" :option-setting="reportSetting['option']"></bar-chart>
-            <line-chart v-if="reportSetting['type'] === 'Line'" :chartdata-setting="reportSetting['chartdata']" :option-setting="reportSetting['option']"></line-chart>
+        <div class="row mt-2">
+            <input-remark-message :remark="this.remark" div-class="col-12 pl-0 pr-0"></input-remark-message>
+        </div>
+
+        <div class="row mt-2">
+            <div v-if="Object.keys(data).length === 0" class="pl-0 col-12">
+                選擇條件查無資料
+            </div>
+            <div v-else class="col-12">
+                <div v-for="(reportSetting,index) in data">
+                    <h2>{{ reportSetting['title'] }}</h2>
+                    <bar-chart v-if="reportSetting['type'] === 'Bar'" :chartdata-setting="reportSetting['chartdata']" :option-setting="reportSetting['option']"></bar-chart>
+                    <line-chart v-if="reportSetting['type'] === 'Line'" :chartdata-setting="reportSetting['chartdata']" :option-setting="reportSetting['option']"></line-chart>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -44,6 +55,15 @@ export default {
             type: Object,
             default: function () {
                 return {}
+            }
+        },
+        remark: {
+            type: Object,
+            default: function () {
+                return {
+                    class: 'alert alert-warning',
+                    content: '',
+                };
             }
         },
     },

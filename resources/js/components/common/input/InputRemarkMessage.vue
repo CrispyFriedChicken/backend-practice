@@ -1,5 +1,5 @@
 <template>
-    <div v-if="this.remark.hasOwnProperty('content') && this.remark.content">
+    <div v-if="this.remark.hasOwnProperty('content') && this.remark.content" :class="this.divClass">
         <div :class="'mb-0 ' + this.remark.class">
             {{ this.remark.content }}
         </div>
@@ -11,14 +11,18 @@ export default {
     name: "InputRemarkMessage",
     props: {
         remark: {
-            type: Array,
+            type: Object,
             default: function () {
-                let remarkArray = [];
-                remarkArray['class'] = 'alert alert-warning';
-                remarkArray['content'] = '';
-                return remarkArray;
+                return {
+                    class: 'alert alert-warning',
+                    content: '',
+                };
             }
         },
+        divClass: {
+            type: String,
+            default: ''
+        }
     },
 }
 </script>

@@ -2,7 +2,7 @@
     <div v-if="this.errors.hasOwnProperty(name)">
         <div class="text-danger" v-for="(error,key,index) of errors[name]">
             {{ error }}
-            <br v-if="index != Object.keys(errors[name]).length - 1">
+            <br v-if="index !== Object.keys(errors[name]).length - 1">
         </div>
     </div>
 </template>

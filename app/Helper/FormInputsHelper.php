@@ -40,9 +40,7 @@ class FormInputsHelper
             if (isset($formInputOption['inputAttrs'])) {
                 $setting['inputAttrs'] = array_merge(self::inputAttrsTemplate, $formInputOption['inputAttrs']);
             }
-            if (isset($formInputOption['remark'])) {
-                $setting['remark'] = array_merge(self::remarkTemplate, $formInputOption['remark']);
-            }
+            $setting['remark'] = isset($formInputOption['remark']) ? array_merge(self::remarkTemplate, $formInputOption['remark']) : self::remarkTemplate;
             $result[] = $setting;
         }
         return $result;

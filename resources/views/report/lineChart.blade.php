@@ -52,8 +52,13 @@
     $defaultFields = [
         'transactionDate' => [$dateStart, $dateEnd],
     ];
+    $remark = [
+        'content' => '目前頁面上顯示的金額幣別皆為人民幣(其他幣別會以當天匯率換算成人民幣)',
+        'class' => 'ml-0 alert alert-warning',
+
+    ];
     ?>
-    <report-page :form-inputs='@json($formInputs)' :default-fields='@json($defaultFields)' url="report/lineChart">
+    <report-page :form-inputs='@json($formInputs)' :default-fields='@json($defaultFields)' url="report/lineChart" :remark='@json($remark,1)'>
 
     </report-page>
 @endsection

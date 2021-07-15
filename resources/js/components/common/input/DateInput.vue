@@ -1,14 +1,14 @@
 <template>
     <div>
         <!--選擇時間類型-->
-        <select class="form-control" :name="'dateMode[' + name + ']'" v-model="dateMode"
+        <select class="form-control" :name="'dateMode[' + name + ']'" v-model="dateMode" @change="changeDateMode"
                 style="width: 120px;display: inline;">
             <option v-for="(key,val) in dateModeList" :value="val">
                 {{ key }}
             </option>
         </select>
         <!--時間輸入框-->
-        <date-picker value-type="format" :range="dateMode.includes('Range')" :type="dateMode.replace('Range','')"
+        <date-picker value-type="format" :range="range" :type="type"
                      :style="{'width' : getWidth() + 'px'}" :input-attr="{name:name,id:id}" v-model="childValue" :default-value="this.value"
                      @change="sendToParent"></date-picker>
     </div>
@@ -56,9 +56,13 @@ export default {
             childValue: this.value,
             id: this.inputAttrs.hasOwnProperty('id') ? this.inputAttrs.id : '',
             name: this.inputAttrs.hasOwnProperty('name') ? this.inputAttrs.name : '',
-            type: this.inputAttrs.hasOwnProperty('type') ? this.inputAttrs.type : 'date',
-            range: this.inputAttrs.hasOwnProperty('range') ? this.inputAttrs.range : false,
+            range: false,
+            type: 'date',
         };
+    },
+    mounted() {
+        this.range = this.dateMode.includes('Range');
+        this.type = this.dateMode.replace('Range', '');
     },
     watch: {
         value: function () {
@@ -93,6 +97,11 @@ export default {
                     return 140;
 
             }
+        },
+        changeDateMode: function () {
+            this.range = this.dateMode.includes('Range');
+            this.type = this.dateMode.replace('Range', '');
+            this.childValue = '';
         }
     },
 }

@@ -10,7 +10,7 @@
             <div v-for="(value,key,index) in values">
                 <div v-if="value" :set="attr = getAttr(key,attrs).inputAttrs">
                     <span style="font-weight: bolder">{{ attr.title }}：</span>
-                    <span>{{ Array.isArray(value) ? value.join(' - ') : (attr.list ? attr.list[value] : value)}}</span>
+                    <span>{{ getShowValue(value, attr.list) }}</span>
                     <span v-if="index !== Object.keys(values).length-1">　/　</span>
                 </div>
             </div>
@@ -59,6 +59,18 @@ export default {
                     return myArray[i];
                 }
             }
+        },
+        getShowValue: function (value, list) {
+            let showString = '';
+            if (Array.isArray(value)) {
+                value.forEach(function (val, index, array) {
+                    let separator = isNaN(Date.parse(val)) ? ' , ' : ' ~ ';//時間的話 呈現 2021-2022 ,其他則呈現 1,2,3
+                    showString += (list ? list[val] : val) + (index !== Object.keys(array).length - 1 ? separator : '');
+                });
+            } else {
+                showString += (list ? list[value] : value);
+            }
+            return showString;
         }
     },
 }
