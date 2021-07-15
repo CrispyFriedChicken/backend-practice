@@ -39,6 +39,11 @@ Route::middleware('auth')->group(function () {
     Route::group(['prefix' => 'dailyOrderSummary'], function () {
         Route::view('list', 'dailyOrderSummary.list');
     });
+    //報表分析
+    Route::group(['prefix' => 'report'], function () {
+        Route::view('barChart', 'report.barChart');
+        Route::view('lineChart', 'report.lineChart');
+    });
 });
 
 /*API Route*/
@@ -67,6 +72,11 @@ Route::group(['prefix' => 'api'], function () {
         //每日注單結算報表
         Route::group(['prefix' => 'dailyOrderSummary'], function () {
             Route::get('', 'Api\DailyOrderSummaryController@list');
+            Route::get('report', 'Api\DailyOrderSummaryController@report');
+        });
+        Route::group(['prefix' => 'report'], function () {
+            Route::get('barChart', 'Api\ReportController@barChart');
+            Route::get('lineChart', 'Api\ReportController@lineChart');
         });
     });
 });

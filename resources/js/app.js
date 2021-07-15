@@ -32,9 +32,11 @@ Vue.component('flash', require('./components/common/layout/Flash').default);
 Vue.component('pagination', require('laravel-vue-pagination'));
 Vue.component('search-condition', require('./components/common/layout/SearchCondition').default);
 Vue.component('bar-chart', require('./components/common/chart/BarChart').default);
+Vue.component('line-chart', require('./components/common/chart/LineChart').default);
 Vue.component('list-page', require('./components/common/page/ListPage').default);
 Vue.component('create-page', require('./components/common/page/CreatePage').default);
 Vue.component('update-page', require('./components/common/page/UpdatePage').default);
+Vue.component('report-page', require('./components/common/page/ReportPage').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

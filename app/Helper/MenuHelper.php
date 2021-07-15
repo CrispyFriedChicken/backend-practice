@@ -83,6 +83,25 @@ class MenuHelper
                     'option' => [],
                     'subItems' => [],
                 ],
+                // 報表分析
+                [
+                    'id' => 'report',
+                    'url' => '',
+                    'content' => '<i class="fa fa-fw fa-gamepad"></i> 報表分析',
+                    'option' => [],
+                    'subItems' => [
+                        // 長條圖
+                        [
+                            'url' => 'report/barChart',
+                            'content' => '長條圖',
+                        ],
+                        // 折線圖
+                        [
+                            'url' => 'report/lineChart',
+                            'content' => '折線圖',
+                        ],
+                    ],
+                ],
                 // 登出
                 [
                     'id' => 'logout',
