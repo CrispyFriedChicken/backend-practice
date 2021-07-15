@@ -13,33 +13,36 @@
             ],
         ],
         [
-            'type' => 'select',
+            'type' => 'select2',
             'class' => 'pl-md-0 col-md-2',
             'inputAttrs' => [
                 'title' => '遊戲類型',
                 'name' => 'type',
                 'placeholder' => '全選',
                 'list' => array_merge(\App\Enum\GameTypeEnum::getKeyValueMap()),
+                'multiple' => true,
             ]
         ],
         [
-            'type' => 'select',
+            'type' => 'select2',
             'class' => 'col-md-3',
             'inputAttrs' => [
                 'title' => '遊戲名稱',
                 'name' => 'code',
                 'placeholder' => '全選',
                 'list' => \App\Enum\GamesEnum::getCodeTitleMap(),
+                'multiple' => true,
             ]
         ],
         [
-            'type' => 'select',
+            'type' => 'select2',
             'class' => 'col-md-2',
             'inputAttrs' => [
                 'title' => '幣別',
                 'name' => 'currency',
                 'placeholder' => '全選',
                 'list' => \App\Enum\CurrencyEnum::getKeyValueMap(),
+                'multiple' => true,
             ]
         ],
     ]);

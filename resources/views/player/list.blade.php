@@ -20,13 +20,14 @@
             ]
         ],
         [
-            'type' => 'select',
+            'type' => 'select2',
             'class' => 'col-md-2',
             'inputAttrs' => [
                 'title' => '幣別',
                 'name' => 'currency',
                 'placeholder' => '全選',
                 'list' => \App\Enum\CurrencyEnum::getKeyValueMap(),
+                'multiple' => true,
             ]
         ],
     ]);

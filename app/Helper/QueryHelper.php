@@ -45,7 +45,11 @@ class QueryHelper
             $requestName = self::getRequestName($equalColumn);
             $dbColumn = self::getDbColumn($equalColumn);
             if ($requestName && $request->$requestName) {
-                $query = $query->where([$dbColumn => $request->$requestName]);
+                if (is_string($request->$requestName)) {
+                    $query = $query->where([$dbColumn => $request->$requestName]);
+                } elseif (is_array($request->$requestName)) {
+                    $query = $query->whereIn($dbColumn, $request->$requestName);
+                }
             }
         }
     }

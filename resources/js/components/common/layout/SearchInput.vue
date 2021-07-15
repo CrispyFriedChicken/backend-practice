@@ -3,6 +3,7 @@
         <span>{{ title }}</span>
         <text-input v-if="this.inputType === 'text'" :inputAttrs="inputAttrs" v-model="value" v-on="$listeners"></text-input>
         <select-input v-else-if="this.inputType === 'select'" :inputAttrs="inputAttrs" v-model="value" v-on="$listeners"></select-input>
+        <select2-input v-else-if="this.inputType === 'select2'" :inputAttrs="inputAttrs" v-model="value==='' && inputAttrs.hasOwnProperty('multiple') && inputAttrs.multiple ? [] : value" v-on="$listeners"></select2-input>
         <date-input v-else-if="this.inputType === 'date'" :inputAttrs="inputAttrs" v-model="value" v-on="$listeners"></date-input>
     </div>
 </template>
@@ -22,7 +23,7 @@ export default {
             default: ''
         },
         value: {
-            type: String,
+            type: [String, Array],
             default: ''
         },
     },

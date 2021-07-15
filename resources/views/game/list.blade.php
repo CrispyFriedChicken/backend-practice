@@ -28,13 +28,14 @@
             ]
         ],
         [
-            'type' => 'select',
+            'type' => 'select2',
             'class' => 'col-md-2',
             'inputAttrs' => [
                 'title' => '遊戲類型',
                 'name' => 'type',
                 'placeholder' => '全選',
                 'list' => \App\Enum\GameTypeEnum::getKeyValueMap(),
+                'multiple' => true,
             ]
         ],
     ]);

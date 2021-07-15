@@ -10,6 +10,20 @@ window.events = new Vue();
 window.flash = function (message, type) {
     window.events.$emit('flash', message, type);
 }
+
+Vue.directive('select2', {
+    inserted(el) {
+        $(el).on('select2:select', () => {
+            const event = new Event('change', { bubbles: true, cancelable: true });
+            el.dispatchEvent(event);
+        });
+
+        $(el).on('select2:unselect', () => {
+            const event = new Event('change', {bubbles: true, cancelable: true})
+            el.dispatchEvent(event)
+        })
+    },
+});
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -22,6 +36,7 @@ window.flash = function (message, type) {
 Vue.component('vue-table', require('./components/common/layout/Table').default);
 Vue.component('text-input', require('./components/common/input/TextInput').default);
 Vue.component('select-input', require('./components/common/input/SelectInput').default);
+Vue.component('select2-input', require('./components/common/input/Select2Input').default);
 Vue.component('date-input', require('./components/common/input/DateInput').default);
 Vue.component('input-error-message', require('./components/common/input/InputErrorMessage').default);
 Vue.component('input-remark-message', require('./components/common/input/InputRemarkMessage').default);
