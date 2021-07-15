@@ -1,7 +1,6 @@
 @extends('layouts.app')
 @section('title' , '玩家一覽')
 @section('content')
-    {{--    <list-player :currency-list=@json()></list-player>--}}
     <?php
     $formInputs = \App\Helper\FormInputsHelper::getFormInputs([
         [
@@ -62,13 +61,7 @@
             'headerStyle' => 'width:110px;',
         ],
     ]);
-    //    //fixme 用完記得移除掉
-    //    \App\Helper\OrderHelper::generateDailySummary();
-    //    exit;
     ?>
     <list-page :table-options='@json($tableOptions)' :form-inputs='@json($formInputs)' url="players">
-        <template v-slot:default="slotProps">
-            @{{ slotProps['slotData']['test5566']}}
-        </template>
     </list-page>
 @endsection

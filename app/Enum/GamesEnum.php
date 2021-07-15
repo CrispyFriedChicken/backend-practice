@@ -19,6 +19,16 @@ class GamesEnum
         return $codeTitleMap;
     }
 
+    public static function getCodeChineseNameMap()
+    {
+        $codeTitleMap = [];
+        $rows = DB::table('games')->get();
+        foreach ($rows as $row) {
+            $codeTitleMap[$row->code] = $row->chineseName;
+        }
+        return $codeTitleMap;
+    }
+
 
     public static function getFakeTypeMaps()
     {

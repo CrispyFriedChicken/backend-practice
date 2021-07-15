@@ -25,6 +25,8 @@
     },
     "dependencies": {
         "chart.js": "^2.9.4",
+        "chartjs": "^0.3.24",
+        "chartjs-plugin-datalabels": "^1.0.0",
         "laravel-vue-pagination": "^2.3.1",
         "resolve-url": "^0.2.1",
         "select2": "^4.1.0-rc.0",

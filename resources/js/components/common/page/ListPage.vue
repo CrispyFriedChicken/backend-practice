@@ -41,7 +41,9 @@ export default {
     props: {
         formInputs: {
             type: Array,
-            default: []
+            default: function () {
+                return []
+            }
         },
         tableOptions: {
             type: Object,

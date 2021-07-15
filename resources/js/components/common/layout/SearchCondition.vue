@@ -2,8 +2,8 @@
     <div class="row mb-4">
         <div class="row col-12">
             <span v-if="meta.hasOwnProperty('total')">總共 {{ meta.total }} 筆</span>
-            <span v-if="meta.hasOwnProperty('total') && meta.total > 1">，目前顯示第 {{ meta.from }} 筆到第 {{ meta.to }} 筆</span>
-            <span v-if="isValuesExist(values)">，查詢條件如下</span>
+            <span v-if="meta.hasOwnProperty('total') && meta.total > 1">，目前顯示第 {{ meta.from }} 筆到第 {{ meta.to }} 筆  </span>
+            <span v-if="isValuesExist(values)">查詢條件如下</span>
         </div>
         <!--條件顯示-->
         <div class="row col-12 mt-2" v-if="isValuesExist(values)">
@@ -30,7 +30,9 @@ export default {
         },
         attrs: {
             type: Array,
-            default: [],
+            default: function () {
+                return []
+            }
         },
         meta: {
             type: Object,
