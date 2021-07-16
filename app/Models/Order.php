@@ -22,9 +22,9 @@ use Webpatser\Uuid\Uuid;
  * @property string $orderSerial
  * @property string $transactionDate
  * @property string $code
- * @property string $type
+ * @property int $type
  * @property string $email
- * @property string $currency
+ * @property int $currency
  * @property float $stake
  * @property float $stakeCny
  * @property float $winning
@@ -77,7 +77,9 @@ class Order extends Model
 		'stake' => 'float',
 		'stakeCny' => 'float',
 		'winning' => 'float',
-		'winningCny' => 'float'
+		'winningCny' => 'float',
+        'type' => 'int',
+        'currency' => 'int',
 	];
 
 	protected $dates = [

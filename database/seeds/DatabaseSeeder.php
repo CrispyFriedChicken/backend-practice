@@ -3,9 +3,9 @@
 use Illuminate\Database\Seeder;
 use App\Enum\UserRoleEnum;
 use App\User;
-use App\Enum\GameTypeEnum;
 use App\Models\SerialSetting;
-
+use App\Models\GameType;
+use App\Models\Currency;
 
 class DatabaseSeeder extends Seeder
 {
@@ -41,21 +41,48 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('test1234'),
             'role' => UserRoleEnum::ADMIN,
         ]);
+
+
+        //遊戲類型設定
+        if (1) {
+            $sources = [
+                'slot' => 'Slot',
+                'fish' => 'Fish',
+                'poker' => 'Poker',
+            ];
+            $serial = 1;
+            foreach ($sources as $name => $title) {
+                $gameType = new GameType();
+                $gameType->code = $serial;
+                $gameType->name = $name;
+                $gameType->title = $title;
+                $gameType->save();
+                $serial++;
+            }
+        }
+
+        //幣別設定
+        if (1) {
+            $sources = [
+                'TWD' => '台幣',
+                'USD' => '美金',
+                'GBD' => '英鎊',
+                'CNY' => '人民幣',
+            ];
+            $serial = 1;
+            foreach ($sources as $name => $title) {
+                $currency = new Currency();
+                $currency->code = $serial;
+                $currency->name = $name;
+                $currency->title = $title;
+                $currency->save();
+                $serial++;
+            }
+        }
+
         //序號設定
         if (1) {
             $settings = [
-                GameTypeEnum::slot => [
-                    'prefix' => 'S',
-                    'length' => 3,
-                ],
-                GameTypeEnum::fish => [
-                    'prefix' => 'F',
-                    'length' => 3,
-                ],
-                GameTypeEnum::poker => [
-                    'prefix' => 'P',
-                    'length' => 3,
-                ],
                 'round' => [
                     'prefix' => 'R',
                     'dateRule' => 'ymd',
@@ -67,6 +94,14 @@ class DatabaseSeeder extends Seeder
                     'length' => 4,
                 ],
             ];
+
+            $gameTypes = GameType::get();
+            foreach ($gameTypes as $gameType) {
+                $settings[$gameType->name] = [
+                    'prefix' => strtoupper(substr($gameType->name, 0, 1)),
+                    'length' => 3,
+                ];
+            }
 
             foreach ($settings as $identifier => $setting) {
                 $serialSetting = new SerialSetting();

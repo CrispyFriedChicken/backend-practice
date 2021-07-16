@@ -3,11 +3,11 @@
 namespace App\Helper;
 
 use AmrShawky\LaravelCurrency\Facade\Currency;
-use App\Enum\CurrencyEnum;
 use App\Enum\GamesEnum;
 use App\Enum\UserRoleEnum;
 use App\Models\DailyOrderSummary;
 use App\Models\Game;
+use App\Models\GameType;
 use App\Models\Order;
 use App\Models\SerialControl;
 use App\Models\SerialSetting;
@@ -31,9 +31,9 @@ class OrderHelper
     {
         //取當日匯率
         $exchangeRateMap = [];
-        $currencys = array_keys(CurrencyEnum::getKeyValueMap());
-        foreach ($currencys as $currency) {
-            $exchangeRateMap[$currency] = Currency::rates()
+        $currencys = \App\Models\Currency::getNameCodeMap();
+        foreach ($currencys as $currency => $code) {
+            $exchangeRateMap[$code] = Currency::rates()
                 ->historical(date('Y-m-d', strtotime($currentDate)))
                 ->symbols(['CNY'])
                 ->base($currency)
@@ -91,10 +91,12 @@ class OrderHelper
             ->get();
         $rows = json_decode(json_encode($queryResult), true);
         $codeTitleMap = GamesEnum::getCodeTitleMap();
-        $currencyKeyValueMap = CurrencyEnum::getKeyValueMap();
+
+        $typeCodeTitleMap = GameType::getCodeTitleMap(true);
+        $currencyCodeTitleMap = \App\Models\Currency::getCodeTitleMap();
         $summary = [];
         foreach ($rows as $row) {
-            foreach (['all', $row['type']] as $type) {
+            foreach ([GameType::ALL_TYPE, $row['type']] as $type) {
                 if (!isset($summary[$type][$row['currency']])) {
                     $summary[$type][$row['currency']] = [
                         'stake' => 0,
@@ -112,7 +114,7 @@ class OrderHelper
                     $row['transactionDate'],//下注時間
                     $codeTitleMap[$row['code']],//遊戲名稱
                     $row['email'],//玩家帳號
-                    $currencyKeyValueMap[$row['currency']],//幣別
+                    $currencyCodeTitleMap[$row['currency']],//幣別
                     $row['stake'],//投注額
                     $row['winning'],//派彩
                     $row['stakeCny'],//投注額(人民幣)
@@ -133,7 +135,7 @@ class OrderHelper
 
                 //建立報表csv檔案
                 if (1) {
-                    $fileName = "$date-$type-$currency";
+                    $fileName = "$date-{$typeCodeTitleMap[$type]}-{$currencyCodeTitleMap[$currency]}";
                     $headers = [[
                         '局號',
                         '注單編號',

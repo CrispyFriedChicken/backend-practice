@@ -19,7 +19,7 @@
                 'title' => '遊戲類型',
                 'name' => 'type',
                 'placeholder' => '全選',
-                'list' => array_merge(\App\Enum\GameTypeEnum::getKeyValueMap()),
+                'list' => array_merge(\App\Models\GameType::getCodeTitleMap()),
                 'multiple' => true,
             ]
         ],
@@ -41,7 +41,7 @@
                 'title' => '幣別',
                 'name' => 'currency',
                 'placeholder' => '全選',
-                'list' => \App\Enum\CurrencyEnum::getKeyValueMap(),
+                'list' => \App\Models\Currency::getCodeTitleMap(),
                 'multiple' => true,
             ]
         ],

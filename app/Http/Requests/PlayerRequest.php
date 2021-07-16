@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Enum\CurrencyEnum;
+use App\Models\Currency;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -29,7 +29,7 @@ class PlayerRequest extends FormRequest
             'name' => ['required', 'string', 'max:100'],
             'email' => ['required', 'string', 'max:100', 'email', "unique:users,email" . ($this->uuid ? ",{$this->uuid},uuid" : '')],
             'password' => $this->uuid ? [] : ['required', 'string', 'min:8', 'confirmed'],
-            'currency' => ['required', 'string', 'max:30', Rule::in(array_keys(CurrencyEnum::getKeyValueMap()))]
+            'currency' => ['required', 'string', 'max:30', Rule::in(array_keys(Currency::getCodeTitleMap()))]
         ];
     }
 

@@ -13,8 +13,8 @@ use Illuminate\Database\Eloquent\Model;
  * Class DailyOrderSummary
  *
  * @property int $id
- * @property string $type
- * @property string $currency
+ * @property int $type
+ * @property int $currency
  * @property string $transactionDate
  * @property int $orderCount
  * @property float $stake
@@ -42,6 +42,8 @@ class DailyOrderSummary extends Model
 	public $timestamps = false;
 
 	protected $casts = [
+        'type' => 'int',
+        'currency' => 'int',
 		'orderCount' => 'int',
 		'stake' => 'float',
 		'winning' => 'float'

@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Enum\GameTypeEnum;
+use App\Models\Currency;
+use App\Models\GameType;
 use App\Helper\QueryHelper;
 use App\Http\Requests\GameRequest;
 use App\Http\Resources\GameResource;
@@ -62,42 +63,46 @@ class OrderController extends Controller
             'stake' => 0,
             'orderCount' => 0,
         ];
-        $summary = [
-            GameTypeEnum::slot => [],
-            GameTypeEnum::fish => [],
-            GameTypeEnum::poker => [],
-            'total' => [],
-        ];
+
+        $summary = [];
+        $gameTypes = GameType::get();
+        foreach ($gameTypes as $gameType) {
+            $summary[$gameType->code] = [];
+        }
+        $summary[GameType::ALL_TYPE] = [];
+
         foreach ($rows as $row) {
-            if (!isset($summary['total'][$row->currency])) {
-                $summary['total'][$row->currency] = $template;
+            if (!isset($summary[GameType::ALL_TYPE][$row->currency])) {
+                $summary[GameType::ALL_TYPE][$row->currency] = $template;
             }
             if (!isset($summary[$row->type][$row->currency])) {
                 $summary[$row->type][$row->currency] = $template;
             }
             foreach (['winning', 'stake', 'orderCount'] as $col) {
-                $summary['total'][$row->currency][$col] += $row->$col;
+                $summary[GameType::ALL_TYPE][$row->currency][$col] += $row->$col;
                 $summary[$row->type][$row->currency][$col] += $row->$col;
             }
         }
-        foreach ($summary as $type => $currencys) {
+        foreach ($summary as $type => $currencyCodes) {
             ksort($summary[$type]);
         }
-        $keyValueMap = array_merge(GameTypeEnum::getKeyValueMap(), ['total' => '總共']);
+        $gameTypeCodeTitleMap = GameType::getCodeTitleMap(true);
+        $currencyCodeTitleMap = Currency::getCodeTitleMap();
         $showTexts = [];
-        foreach ($summary as $type => $currencys) {
+        foreach ($summary as $type => $currencyCodes) {
             $stakes = [];
             $winnings = [];
             $totalCount = 0;
-            foreach ($currencys as $currency => $info) {
-                $stakes[] = $currency . '$ ' . number_format($info['stake']);
-                $winnings[] = $currency . '$ ' . number_format($info['winning']);
+            foreach ($currencyCodes as $currencyCode => $info) {
+                $currency = $currencyCodeTitleMap[$currencyCode];
+                $stakes[] = $currency . ' $ ' . number_format($info['stake']);
+                $winnings[] = $currency . ' $ ' . number_format($info['winning']);
                 $totalCount += $info['orderCount'];
             }
-            $isShowText = $type == 'total' ? count($showTexts) > 1 : $totalCount > 0;
+            $isShowText = $type == GameType::ALL_TYPE ? count($showTexts) > 1 : $totalCount > 0;
             if ($isShowText) {
                 $showTexts[] = [
-                    'title' => $keyValueMap[$type],
+                    'title' => $gameTypeCodeTitleMap[$type],
                     'texts' => [
                         '總投注額 : ' . implode($stakes, "　/　"),
                         '總派彩 : ' . implode($winnings, "　/　"),

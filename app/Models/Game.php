@@ -19,7 +19,7 @@ use Webpatser\Uuid\Uuid;
  * @property string $chineseName
  * @property string $englishName
  * @property string $code
- * @property string $type
+ * @property int $type
  * @property Carbon|null $createdAt
  * @property Carbon|null $updatedAt
  * @property Collection|Order[] $orders
@@ -56,6 +56,10 @@ class Game extends Model
         });
     }
 	protected $table = 'games';
+
+    protected $casts = [
+        'type' => 'int'
+    ];
 
 	protected $dates = [
 		'createdAt',

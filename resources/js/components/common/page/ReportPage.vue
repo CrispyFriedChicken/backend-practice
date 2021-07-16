@@ -24,7 +24,7 @@
             <input-remark-message :remark="this.remark" div-class="col-12 pl-0 pr-0"></input-remark-message>
         </div>
 
-        <div class="row mt-2">
+        <div class="row mt-4">
             <div v-if="Object.keys(data).length === 0" class="pl-0 col-12">
                 選擇條件查無資料
             </div>

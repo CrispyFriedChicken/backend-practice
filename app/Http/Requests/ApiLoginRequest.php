@@ -2,9 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Enum\GameTypeEnum;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class ApiLoginRequest extends FormRequest
 {

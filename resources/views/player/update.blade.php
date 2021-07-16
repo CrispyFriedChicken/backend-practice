@@ -24,7 +24,7 @@
             'inputAttrs' => [
                 'title' => '幣別',
                 'name' => 'currency',
-                'list' => \App\Enum\CurrencyEnum::getKeyValueMap(),
+                'list' => \App\Models\Currency::getCodeTitleMap(),
             ]
         ],
     ]);

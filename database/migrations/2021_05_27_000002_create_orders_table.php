@@ -25,9 +25,9 @@ class CreateOrdersTable extends Migration
                 $table->string('orderSerial', 20)->unique()->default('')->comment('注單編號');
                 $table->string('transactionDate', 24)->default('')->comment('下注時間');
                 $table->string('code', 10)->default('')->comment('遊戲代號');
-                $table->string('type', 30)->default('')->comment('遊戲類型');
+                $table->integer('type')->default(-1)->comment('遊戲類型');
                 $table->string('email')->comment('信箱(帳號)');
-                $table->string('currency', 10)->default('')->comment('幣別');
+                $table->integer('currency')->default(-1)->comment('幣別');
                 $table->double('stake')->default(0)->comment('投注額(原幣別)');
                 $table->double('stakeCny')->default(0)->comment('投注額(人民幣)');
                 $table->double('winning')->default(0)->comment('派彩(原幣別)');

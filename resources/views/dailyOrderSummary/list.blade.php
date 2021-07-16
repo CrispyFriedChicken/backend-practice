@@ -19,7 +19,7 @@
                 'title' => '遊戲類型',
                 'name' => 'type',
                 'placeholder' => '全選',
-                'list' => array_merge(\App\Enum\GameTypeEnum::getKeyValueMap(), ['all' => '全遊戲類型']),
+                'list' => \App\Models\GameType::getCodeTitleMap(true),
                 'multiple' => true,
             ]
         ],
@@ -30,7 +30,7 @@
                 'title' => '幣別',
                 'name' => 'currency',
                 'placeholder' => '全選',
-                'list' => \App\Enum\CurrencyEnum::getKeyValueMap(),
+                'list' => \App\Models\Currency::getCodeTitleMap(),
                 'multiple' => true,
             ]
         ],
@@ -78,13 +78,13 @@
             'type' => 'text',
             'title' => '遊戲類型',
             'name' => 'type',
-            'list' => array_merge(\App\Enum\GameTypeEnum::getKeyValueMap(), ['all' => '全遊戲類型']),
+            'list' => \App\Models\GameType::getCodeTitleMap(true),
         ],
         [
             'type' => 'text',
             'title' => '幣別',
             'name' => 'currency',
-            'list' => \App\Enum\CurrencyEnum::getKeyValueMap(),
+            'list' => \App\Models\Currency::getCodeTitleMap(),
         ],
         [
             'type' => 'number',

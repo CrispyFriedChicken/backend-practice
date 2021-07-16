@@ -17,7 +17,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @property string $role 角色
  * @property string $email 信箱(帳號)
  * @property string $password 密碼
- * @property string $currency 幣別
+ * @property int $currency 幣別
  * @property \Illuminate\Support\Carbon|null $email_verified_at
  * @property string|null $remember_token
  * @property \Illuminate\Support\Carbon|null $createdAt
@@ -90,5 +90,6 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'currency' => 'int',
     ];
 }

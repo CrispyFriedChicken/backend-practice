@@ -26,7 +26,7 @@
                 'title' => '幣別',
                 'name' => 'currency',
                 'placeholder' => '全選',
-                'list' => \App\Enum\CurrencyEnum::getKeyValueMap(),
+                'list' => \App\Models\Currency::getCodeTitleMap(),
                 'multiple' => true,
             ]
         ],
@@ -52,7 +52,7 @@
             'type' => 'text',
             'title' => '幣別',
             'name' => 'currency',
-            'list' => \App\Enum\CurrencyEnum::getKeyValueMap(),
+            'list' => \App\Models\Currency::getCodeTitleMap(),
         ],
         [
             'type' => 'action',

@@ -24,7 +24,7 @@
             'inputAttrs' => [
                 'title' => '遊戲類型',
                 'name' => 'type',
-                'list' => \App\Enum\GameTypeEnum::getKeyValueMap(),
+                'list' => \App\Models\GameType::getCodeTitleMap(),
             ]
         ],
     ]);

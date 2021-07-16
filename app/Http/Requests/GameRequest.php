@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Enum\GameTypeEnum;
+use App\Models\GameType;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -28,7 +28,7 @@ class GameRequest extends FormRequest
         return [
             'chineseName' => ['required', 'string', 'max:100', "unique:games,chineseName" . ($this->uuid ? ",{$this->uuid},uuid" : '')],
             'englishName' => ['required', 'string', 'max:100', "unique:games,englishName" . ($this->uuid ? ",{$this->uuid},uuid" : '')],
-            'type' => ['required', 'string', 'max:30', Rule::in(array_keys(GameTypeEnum::getKeyValueMap()))]
+            'type' => ['required', 'string', 'max:30', Rule::in(array_keys(GameType::getCodeTitleMap()))]
         ];
     }
 

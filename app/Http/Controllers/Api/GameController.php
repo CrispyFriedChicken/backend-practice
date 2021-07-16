@@ -7,6 +7,7 @@ use App\Helper\SerialHelper;
 use App\Http\Requests\GameRequest;
 use App\Http\Resources\GameResource;
 use App\Models\Game;
+use App\Models\GameType;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -38,11 +39,12 @@ class GameController extends Controller
      */
     public function create(GameRequest $request)
     {
+        $gameTypeCodeNameMap = GameType::getCodeNameMap();
         $game = new Game();
         $game->chineseName = $request->chineseName;
         $game->englishName = $request->englishName;
         $game->type = $request->type;
-        $game->code = SerialHelper::produce($request->type);
+        $game->code = SerialHelper::produce($gameTypeCodeNameMap[$request->type]);
         $game->save();
         return new GameResource($game);
     }
@@ -54,9 +56,10 @@ class GameController extends Controller
      */
     public function update(GameRequest $request)
     {
+        $gameTypeCodeNameMap = GameType::getCodeNameMap();
         $game = Game::where(['uuid' => $request->uuid])->first();
         if ($game->type != $request->type) {
-            $game->code = SerialHelper::produce($request->type);
+            $game->code = SerialHelper::produce($gameTypeCodeNameMap[$request->type]);
         }
         $game->chineseName = $request->chineseName;
         $game->englishName = $request->englishName;

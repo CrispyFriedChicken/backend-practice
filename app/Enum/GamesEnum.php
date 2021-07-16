@@ -3,7 +3,7 @@
 
 namespace App\Enum;
 
-use App\Models\Game;
+use App\Models\GameType;
 use Illuminate\Support\Facades\DB;
 
 class GamesEnum
@@ -33,9 +33,9 @@ class GamesEnum
     public static function getFakeTypeMaps()
     {
         return [
-            GameTypeEnum::fish => self::getFakeFishMap(),
-            GameTypeEnum::poker => self::getFakePokeMap(),
-            GameTypeEnum::slot => self::getFakeSlotMap(),
+            'fish' => self::getFakeFishMap(),
+            'poker' => self::getFakePokeMap(),
+            'slot' => self::getFakeSlotMap(),
         ];
     }
 

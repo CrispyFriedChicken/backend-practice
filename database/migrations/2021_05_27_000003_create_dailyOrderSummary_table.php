@@ -16,8 +16,8 @@ class CreateDailyOrderSummaryTable extends Migration
         try {
             Schema::create('dailyOrderSummary', function (Blueprint $table) {
                 $table->id();
-                $table->string('type',30)->default('')->comment('遊戲類型');
-                $table->string('currency',10)->default('')->comment('幣別');
+                $table->integer('type')->default(-1)->comment('遊戲類型');
+                $table->integer('currency')->default(-1)->comment('幣別');
                 $table->string('transactionDate', 24)->default('')->comment('結算日期');
                 $table->integer('orderCount')->default(0)->comment('總單量');
                 $table->double('stake')->default(0)->comment('總投注額');
@@ -30,6 +30,7 @@ class CreateDailyOrderSummaryTable extends Migration
             throw $exception;
         }
     }
+
     /**
      * Reverse the migrations.
      *

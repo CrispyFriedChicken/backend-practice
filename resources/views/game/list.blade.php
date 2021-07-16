@@ -34,7 +34,7 @@
                 'title' => '遊戲類型',
                 'name' => 'type',
                 'placeholder' => '全選',
-                'list' => \App\Enum\GameTypeEnum::getKeyValueMap(),
+                'list' => \App\Models\GameType::getCodeTitleMap(),
                 'multiple' => true,
             ]
         ],
@@ -65,7 +65,7 @@
             'type' => 'text',
             'title' => '遊戲類型',
             'name' => 'type',
-            'list' => \App\Enum\GameTypeEnum::getKeyValueMap(),
+            'list' => \App\Models\GameType::getCodeTitleMap(),
         ],
         [
             'type' => 'action',
