@@ -2,15 +2,12 @@
 
 namespace App\Helper;
 
-use AmrShawky\LaravelCurrency\Facade\Currency;
 use App\Enum\GamesEnum;
 use App\Enum\UserRoleEnum;
 use App\Models\DailyOrderSummary;
 use App\Models\Game;
 use App\Models\GameType;
 use App\Models\Order;
-use App\Models\SerialControl;
-use App\Models\SerialSetting;
 use App\User;
 use \Datetime;
 use Illuminate\Support\Facades\DB;
@@ -30,16 +27,12 @@ class OrderHelper
     public static function generateDailyFakeOrders($currentDate = false, $roundCount = false, $orderCount = false)
     {
         //取當日匯率
-        $exchangeRateMap = [];
-        $currencys = \App\Models\Currency::getNameCodeMap();
-        foreach ($currencys as $currency => $code) {
-            $exchangeRateMap[$code] = Currency::rates()
-                ->historical(date('Y-m-d', strtotime($currentDate)))
-                ->symbols(['CNY'])
-                ->base($currency)
-                ->get()['CNY'];
-        }
+        $currencyCodeNameMap = \App\Models\Currency::getCodeNameMap();
         $currentDate = $currentDate == false ? date('Y-m-d H:i:s') : $currentDate;
+        $rates = \AmrShawky\LaravelCurrency\Facade\Currency::rates()
+            ->historical(date('Y-m-d', strtotime($currentDate)))
+            ->symbols(array_keys(\App\Models\Currency::getNameCodeMap())) //An array of currency codes to limit output currencies
+            ->get();
         $rounds = $roundCount == false ? rand(50, 100) : $roundCount;
         $currentRound = 1;
         while ($currentRound <= $rounds) {
@@ -49,7 +42,9 @@ class OrderHelper
             $user = User::where(['role' => UserRoleEnum::PLAYER])->get()->random();
             /* @var  $game Game */
             $game = Game::all()->random();
-            $exchangeRate = $exchangeRateMap[$user->currency];
+            $userExchangeRate = $rates[$currencyCodeNameMap[$user->currency]];
+            $cnyExchangeRate = $rates['CNY'];
+            $exchangeRate = $cnyExchangeRate / $userExchangeRate;
             $roundSerial = SerialHelper::produce('round', date('Y-m-d', strtotime($currentDate)));
             while ($currentOrder <= $orders) {
                 $stake = rand(1, 10000);
@@ -65,6 +60,8 @@ class OrderHelper
                 $order->email = $user->email;
                 $order->type = $game->type;
                 $order->code = $game->code;
+                $order->exchangeRate = $userExchangeRate;
+                $order->exchangeRateCny = $cnyExchangeRate;
                 $order->stake = $stake;
                 $order->stakeCny = $stake * $exchangeRate;
                 $order->winning = $winning;
@@ -75,7 +72,6 @@ class OrderHelper
             $currentRound++;
         }
     }
-
 
     /**
      * 日結訂單資料

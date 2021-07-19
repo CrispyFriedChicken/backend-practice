@@ -6,9 +6,9 @@
 
 namespace App\Models;
 
-use App\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use App\User;
 use Webpatser\Uuid\Uuid;
 
 /**
@@ -29,6 +29,8 @@ use Webpatser\Uuid\Uuid;
  * @property float $stakeCny
  * @property float $winning
  * @property float $winningCny
+ * @property float $exchangeRate
+ * @property float $exchangeRateCny
  * @property Carbon|null $createdAt
  * @property Carbon|null $updatedAt
  * @property Game|null $game
@@ -41,6 +43,8 @@ use Webpatser\Uuid\Uuid;
  * @method static \Illuminate\Database\Eloquent\Builder|Order whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Order whereCurrency($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Order whereEmail($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Order whereExchangeRate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Order whereExchangeRateCny($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Order whereGameUuid($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Order whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Order whereOrderSerial($value)
@@ -58,7 +62,6 @@ use Webpatser\Uuid\Uuid;
  */
 class Order extends Model
 {
-
     const CREATED_AT = 'createdAt';
     const UPDATED_AT = 'updatedAt';
     /**
@@ -74,12 +77,14 @@ class Order extends Model
 	protected $table = 'orders';
 
 	protected $casts = [
+		'type' => 'int',
+		'currency' => 'int',
 		'stake' => 'float',
 		'stakeCny' => 'float',
 		'winning' => 'float',
 		'winningCny' => 'float',
-        'type' => 'int',
-        'currency' => 'int',
+		'exchangeRate' => 'float',
+		'exchangeRateCny' => 'float'
 	];
 
 	protected $dates = [
@@ -102,17 +107,19 @@ class Order extends Model
 		'stakeCny',
 		'winning',
 		'winningCny',
+		'exchangeRate',
+		'exchangeRateCny',
 		'createdAt',
 		'updatedAt'
 	];
 
-	public function game()
-	{
-		return $this->belongsTo(Game::class, 'gameUuid', 'uuid');
-	}
+    public function game()
+    {
+        return $this->belongsTo(Game::class, 'gameUuid', 'uuid');
+    }
 
-	public function player()
-	{
-		return $this->belongsTo(User::class, 'userUuid', 'uuid');
-	}
+    public function player()
+    {
+        return $this->belongsTo(User::class, 'userUuid', 'uuid');
+    }
 }

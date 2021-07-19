@@ -66,7 +66,7 @@ class DatabaseSeeder extends Seeder
             $sources = [
                 'TWD' => '台幣',
                 'USD' => '美金',
-                'GBD' => '英鎊',
+                'GBP' => '英鎊',
                 'CNY' => '人民幣',
             ];
             $serial = 1;

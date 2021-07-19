@@ -56,22 +56,31 @@ class Currency extends Model
 
     public static function getCodeTitleMap()
     {
-        $keyValueMap = [];
+        $map = [];
         $rows = self::get();
         foreach ($rows as $row) {
-            $keyValueMap[$row->code] = $row->title;
+            $map[$row->code] = $row->title;
         }
-        return $keyValueMap;
+        return $map;
     }
 
+    public static function getCodeNameMap()
+    {
+        $map = [];
+        $rows = self::get();
+        foreach ($rows as $row) {
+            $map[$row->code] = $row->name;
+        }
+        return $map;
+    }
 
     public static function getNameCodeMap()
     {
+        $map = [];
         $rows = self::get();
-        $codeNameMap = [];
         foreach ($rows as $row) {
-            $codeNameMap[$row->name] = $row->code;
+            $map[$row->name] = $row->code;
         }
-        return $codeNameMap;
+        return $map;
     }
 }

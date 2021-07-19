@@ -30,6 +30,6 @@ $factory->define(User::class, function (Faker $faker) {
         'name' => $twFaker->name,
         'email' => $enFaker->unique()->email,
         'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
-        'currency' => $twFaker->randomElement(array_keys(\App\Models\Currency::getCodeTitleMap())), // password
+        'currency' => $twFaker->randomElement(array_keys(\App\Models\Currency::getCodeTitleMap())),
     ];
 });

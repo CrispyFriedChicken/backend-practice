@@ -56,34 +56,34 @@ class GameType extends Model
 
     public static function getCodeTitleMap($isShowAllSelection = false)
     {
-        $codeTitleMap = [];
+        $map = [];
         $rows = self::get();
         foreach ($rows as $row) {
-            $codeTitleMap[$row->code] = $row->title;
+            $map[$row->code] = $row->title;
         }
         if ($isShowAllSelection) {
-            $codeTitleMap += [self::ALL_TYPE => '全遊戲類型'];
+            $map += [self::ALL_TYPE => '全遊戲類型'];
         }
-        return $codeTitleMap;
+        return $map;
     }
 
     public static function getCodeNameMap()
     {
-        $codeNameMap = [];
+        $map = [];
         $rows = self::get();
         foreach ($rows as $row) {
-            $codeNameMap[$row->code] = $row->name;
+            $map[$row->code] = $row->name;
         }
-        return $codeNameMap;
+        return $map;
     }
 
     public static function getNameCodeMap()
     {
+        $map = [];
         $rows = self::get();
-        $codeNameMap = [];
         foreach ($rows as $row) {
-            $codeNameMap[$row->name] = $row->code;
+            $map[$row->name] = $row->code;
         }
-        return $codeNameMap;
+        return $map;
     }
 }

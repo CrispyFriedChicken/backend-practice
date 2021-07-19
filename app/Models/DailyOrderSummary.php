@@ -39,8 +39,8 @@ use Illuminate\Database\Eloquent\Model;
 class DailyOrderSummary extends Model
 {
 	protected $table = 'dailyOrderSummary';
-	public $timestamps = false;
-
+    const CREATED_AT = 'createdAt';
+    const UPDATED_AT = 'updatedAt';
 	protected $casts = [
         'type' => 'int',
         'currency' => 'int',

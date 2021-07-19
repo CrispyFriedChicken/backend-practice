@@ -32,6 +32,8 @@ class CreateOrdersTable extends Migration
                 $table->double('stakeCny')->default(0)->comment('投注額(人民幣)');
                 $table->double('winning')->default(0)->comment('派彩(原幣別)');
                 $table->double('winningCny')->default(0)->comment('派彩(人民幣)');
+                $table->double('exchangeRate')->default(0)->comment('匯率(原幣別)');
+                $table->double('exchangeRateCny')->default(0)->comment('匯率(人民幣)');
                 $table->timestamp('createdAt')->nullable();
                 $table->timestamp('updatedAt')->nullable();
             });
