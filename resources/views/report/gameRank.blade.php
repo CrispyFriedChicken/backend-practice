@@ -47,7 +47,7 @@
         ],
     ]);
     $defaultFields = [
-        'transactionDate' => \App\Models\DailyOrderSummary::max('transactionDate'),
+        'transactionDate' => date('Y-m-d'),
     ];
     $remark = [
         'content' => '目前頁面上顯示的金額幣別皆為人民幣(其他幣別會以當天匯率換算成人民幣)',

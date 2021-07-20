@@ -46,8 +46,8 @@
             ]
         ],
     ]);
-    $dateEnd = \App\Models\DailyOrderSummary::max('transactionDate');
-    $dateStart = date('Y-m-d', strtotime($dateEnd . ' -7day'));
+    $dateEnd = date('Y-m-d');
+    $dateStart = date('Y-m-d', strtotime($dateEnd . ' -6day'));
     $defaultFields = [
         'transactionDate' => [$dateStart, $dateEnd],
     ];

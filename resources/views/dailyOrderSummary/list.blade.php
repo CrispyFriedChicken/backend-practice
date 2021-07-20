@@ -111,7 +111,7 @@
     ]);
 
     $defaultFields = [
-        'transactionDate' => \App\Models\DailyOrderSummary::max('transactionDate'),
+        'transactionDate' => date('Y-m-d', strtotime('yesterday')),
         'sortColumn' => 'currency',
         'sortBy' => 'desc',
     ];
