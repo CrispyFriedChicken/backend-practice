@@ -48,7 +48,7 @@ class OrderHelper
             $roundSerial = SerialHelper::produce('round', date('Y-m-d', strtotime($currentDate)));
             while ($currentOrder <= $orders) {
                 $stake = rand(1, 10000);
-                $winning = rand(0, $stake);
+                $winning = rand(0, $stake * 1.8);
                 $order = new Order();
                 $order->uuid = (string)Uuid::generate(4);
                 $order->userUuid = $user->uuid;

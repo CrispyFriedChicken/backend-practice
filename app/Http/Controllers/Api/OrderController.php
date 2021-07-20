@@ -126,10 +126,10 @@ class OrderController extends Controller
                 'roundSerial',
                 'orderSerial',
                 'email',
-                'code',
             ],
             QueryHelper::EqualSearch => [
                 'currency',
+                'code',
                 'type',
             ],
             QueryHelper::DateSearch => ['transactionDate'],

@@ -87,14 +87,6 @@ export default {
             return result;
         }
     },
-    filters: {
-        money(value) {
-            return '$ ' + new Intl.NumberFormat().format(value);
-        },
-        number(value) {
-            return new Intl.NumberFormat().format(value);
-        }
-    }
 }
 </script>
 

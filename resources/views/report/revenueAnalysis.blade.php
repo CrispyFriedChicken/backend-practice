@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title' , '報表分析(長條圖)')
+@section('title' , '營收分析')
 @section('content')
     <?php
     $formInputs = \App\Helper\FormInputsHelper::getFormInputs([
@@ -9,7 +9,7 @@
             'inputAttrs' => [
                 'title' => '下注時間',
                 'name' => 'transactionDate',
-                'dateMode' => 'date',
+                'dateMode' => 'dateRange',
             ],
         ],
         [
@@ -19,7 +19,7 @@
                 'title' => '遊戲類型',
                 'name' => 'type',
                 'placeholder' => '全選',
-                'list' => array_merge(\App\Models\GameType::getCodeTitleMap()),
+                'list' => \App\Models\GameType::getCodeTitleMap(),
                 'multiple' => true,
             ]
         ],
@@ -46,15 +46,17 @@
             ]
         ],
     ]);
+    $dateEnd = \App\Models\DailyOrderSummary::max('transactionDate');
+    $dateStart = date('Y-m-d', strtotime($dateEnd . ' -7day'));
     $defaultFields = [
-        'transactionDate' => \App\Models\DailyOrderSummary::max('transactionDate'),
+        'transactionDate' => [$dateStart, $dateEnd],
     ];
     $remark = [
         'content' => '目前頁面上顯示的金額幣別皆為人民幣(其他幣別會以當天匯率換算成人民幣)',
         'class' => 'ml-0 alert alert-warning',
     ];
     ?>
-    <report-page :form-inputs='@json($formInputs)' :default-fields='@json($defaultFields)' url="report/barChart" :remark='@json($remark,1)'>
+    <report-page :form-inputs='@json($formInputs)' :default-fields='@json($defaultFields)' url="report/revenueAnalysis" :remark='@json($remark,1)'>
 
     </report-page>
 @endsection

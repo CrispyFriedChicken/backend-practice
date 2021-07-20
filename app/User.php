@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Enum\UserRoleEnum;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -92,4 +93,15 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'currency' => 'int',
     ];
+
+
+    public static function getPlayerEmailTitleMap()
+    {
+        $map = [];
+        $rows = self::where(['role' => UserRoleEnum::PLAYER])->get();
+        foreach ($rows as $row) {
+            $map[$row->email] = "$row->name ( $row->email )";
+        }
+        return $map;
+    }
 }

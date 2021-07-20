@@ -90,15 +90,25 @@ class MenuHelper
                     'content' => '<i class="fa fa-fw fa-gamepad"></i> 報表分析',
                     'option' => [],
                     'subItems' => [
-                        // 長條圖
+                        // 營收分析
                         [
-                            'url' => 'report/barChart',
-                            'content' => '長條圖',
+                            'url' => 'report/revenueAnalysis',
+                            'content' => '營收分析',
                         ],
-                        // 折線圖
+                        // 單量分析
                         [
-                            'url' => 'report/lineChart',
-                            'content' => '折線圖',
+                            'url' => 'report/orderCountAnalysis',
+                            'content' => '單量分析',
+                        ],
+                        // 遊戲排行
+                        [
+                            'url' => 'report/gameRank',
+                            'content' => '遊戲排行',
+                        ],
+                        // 玩家排行
+                        [
+                            'url' => 'report/playerRank',
+                            'content' => '玩家排行',
                         ],
                     ],
                 ],

@@ -41,8 +41,10 @@ Route::middleware('auth')->group(function () {
     });
     //報表分析
     Route::group(['prefix' => 'report'], function () {
-        Route::view('barChart', 'report.barChart');
-        Route::view('lineChart', 'report.lineChart');
+        Route::view('revenueAnalysis', 'report.revenueAnalysis');
+        Route::view('orderCountAnalysis', 'report.orderCountAnalysis');
+        Route::view('gameRank', 'report.gameRank');
+        Route::view('playerRank', 'report.playerRank');
     });
 });
 
@@ -74,9 +76,12 @@ Route::group(['prefix' => 'api'], function () {
             Route::get('', 'Api\DailyOrderSummaryController@list');
             Route::get('report', 'Api\DailyOrderSummaryController@report');
         });
+        //報表分析
         Route::group(['prefix' => 'report'], function () {
-            Route::get('barChart', 'Api\ReportController@barChart');
-            Route::get('lineChart', 'Api\ReportController@lineChart');
+            Route::get('revenueAnalysis', 'Api\ReportController@revenueAnalysis');
+            Route::get('orderCountAnalysis', 'Api\ReportController@orderCountAnalysis');
+            Route::get('gameRank', 'Api\ReportController@gameRank');
+            Route::get('playerRank', 'Api\ReportController@playerRank');
         });
     });
 });

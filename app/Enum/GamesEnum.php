@@ -14,7 +14,7 @@ class GamesEnum
         $codeTitleMap = [];
         $rows = DB::table('games')->get();
         foreach ($rows as $row) {
-            $codeTitleMap[$row->code] = "{$row->code} - {$row->chineseName} ( {$row->englishName} )";
+            $codeTitleMap[$row->code] = "{$row->code} - {$row->chineseName}";
         }
         return $codeTitleMap;
     }

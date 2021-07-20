@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title' , '報表分析(折線圖)')
+@section('title' , '單量分析')
 @section('content')
     <?php
     $formInputs = \App\Helper\FormInputsHelper::getFormInputs([
@@ -19,7 +19,7 @@
                 'title' => '遊戲類型',
                 'name' => 'type',
                 'placeholder' => '全選',
-                'list' => array_merge(\App\Models\GameType::getCodeTitleMap()),
+                'list' => \App\Models\GameType::getCodeTitleMap(),
                 'multiple' => true,
             ]
         ],
@@ -58,7 +58,7 @@
 
     ];
     ?>
-    <report-page :form-inputs='@json($formInputs)' :default-fields='@json($defaultFields)' url="report/lineChart" :remark='@json($remark,1)'>
+    <report-page :form-inputs='@json($formInputs)' :default-fields='@json($defaultFields)' url="report/orderCountAnalysis" :remark='@json($remark,1)'>
 
     </report-page>
 @endsection

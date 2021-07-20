@@ -24,6 +24,12 @@ Vue.directive('select2', {
         })
     },
 });
+Vue.filter('money', function (value) {
+    return '$ ' + new Intl.NumberFormat().format(value);
+})
+Vue.filter('number', function (value) {
+    return new Intl.NumberFormat().format(value);
+})
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -34,6 +40,7 @@ Vue.directive('select2', {
 
 //共用
 Vue.component('vue-table', require('./components/common/layout/Table').default);
+Vue.component('chart-table', require('./components/common/layout/ChartTable').default);
 Vue.component('text-input', require('./components/common/input/TextInput').default);
 Vue.component('select-input', require('./components/common/input/SelectInput').default);
 Vue.component('select2-input', require('./components/common/input/Select2Input').default);
@@ -48,6 +55,7 @@ Vue.component('pagination', require('laravel-vue-pagination'));
 Vue.component('search-condition', require('./components/common/layout/SearchCondition').default);
 Vue.component('bar-chart', require('./components/common/chart/BarChart').default);
 Vue.component('line-chart', require('./components/common/chart/LineChart').default);
+Vue.component('pie-chart', require('./components/common/chart/PieChart').default);
 Vue.component('list-page', require('./components/common/page/ListPage').default);
 Vue.component('create-page', require('./components/common/page/CreatePage').default);
 Vue.component('update-page', require('./components/common/page/UpdatePage').default);
