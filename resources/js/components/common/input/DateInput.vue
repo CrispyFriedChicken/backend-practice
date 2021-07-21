@@ -10,7 +10,7 @@
         <!--時間輸入框-->
         <date-picker value-type="format" :range="range" :type="type"
                      :style="{'width' : getWidth() + 'px'}" :input-attr="{name:name,id:id}" v-model="childValue" :default-value="this.value"
-                     @change="sendToParent"></date-picker>
+                     @change="sendToParent" :clearable="false"></date-picker>
         <!--選擇時間維度-->
         <div style="width: 120px;" v-if="inputAttrs.hasOwnProperty('isShowModeOption') && inputAttrs.isShowModeOption">
             <select-input :inputAttrs="modeOptionInputAttrs" v-model="modeOptionInputAttrs.value" v-on="$listeners"></select-input>
