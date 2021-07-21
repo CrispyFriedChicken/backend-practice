@@ -35,7 +35,7 @@ class Kernel extends ConsoleKernel
         $schedule->call(function () {
             $date = date('Y-m-d H:i:s');
             echo '$date ' . $date . "\n";
-            OrderHelper::generateDailyFakeOrders($date, 3, 5);
+            OrderHelper::generateDailyFakeOrders($date, rand(0, 3), rand(0, 5));
         })->everyFiveMinutes();
     }
 
