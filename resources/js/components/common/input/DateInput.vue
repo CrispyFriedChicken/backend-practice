@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="row pl-4">
         <!--選擇時間類型-->
         <select class="form-control" :name="'dateMode[' + name + ']'" v-model="dateMode" @change="changeDateMode"
                 style="width: 120px;display: inline;">
@@ -11,6 +11,10 @@
         <date-picker value-type="format" :range="range" :type="type"
                      :style="{'width' : getWidth() + 'px'}" :input-attr="{name:name,id:id}" v-model="childValue" :default-value="this.value"
                      @change="sendToParent"></date-picker>
+        <!--選擇時間維度-->
+        <div style="width: 120px;" v-if="inputAttrs.hasOwnProperty('isShowModeOption') && inputAttrs.isShowModeOption">
+            <select-input :inputAttrs="modeOptionInputAttrs" v-model="modeOptionInputAttrs.value" v-on="$listeners"></select-input>
+        </div>
     </div>
 </template>
 
@@ -42,7 +46,6 @@ export default {
     },
     data() {
         let list = {
-            'datetime': '時間',
             'date': '日期',
             'month': '月',
             'year': '年',
@@ -62,6 +65,14 @@ export default {
             name: this.inputAttrs.hasOwnProperty('name') ? this.inputAttrs.name : '',
             range: false,
             type: 'date',
+            modeOptionInputAttrs: {
+                title: '時間維度',
+                name: 'modeOption',
+                value: 'day',
+                list: {
+                    'day': '時間維度:天',
+                },
+            },
         };
     },
     mounted() {
@@ -82,8 +93,6 @@ export default {
         },
         getWidth: function () {
             switch (this.dateMode) {
-                case 'datetime':
-                    return 180;
                 case 'date':
                 default:
                     return 130;
@@ -107,10 +116,13 @@ export default {
         },
         changeDateMode: function () {
             switch (this.dateMode) {
-                case 'datetime':
                 case 'date':
                 case 'month':
                 case 'year':
+                    this.range = this.dateMode.includes('Range');
+                    this.type = this.dateMode.replace('Range', '');
+                    this.childValue = new Date();
+                    break;
                 case 'datetimeRange':
                 case 'dateRange':
                 case 'monthRange':
@@ -118,7 +130,7 @@ export default {
                 default:
                     this.range = this.dateMode.includes('Range');
                     this.type = this.dateMode.replace('Range', '');
-                    this.childValue = '';
+                    this.childValue = [new Date(), new Date()];
                     break;
                 case '7d':
                 case '14d':
@@ -134,7 +146,45 @@ export default {
                     this.childValue = dates;
                     break;
             }
-
+            this.sendToParent();
+            //維度設定
+            if (this.inputAttrs.hasOwnProperty('isShowModeOption') && this.inputAttrs.isShowModeOption) {
+                switch (this.dateMode) {
+                    case 'date':
+                    case 'datetimeRange':
+                        this.modeOptionInputAttrs.list = {
+                            'day': '時間維度:天',
+                            'hour': '時間維度:小時',
+                            'minute': '時間維度:分鐘',
+                        };
+                        break;
+                    case 'month':
+                    case 'monthRange':
+                        this.modeOptionInputAttrs.list = {
+                            'day': '時間維度:天',
+                            'month': '時間維度:月',
+                        };
+                        break;
+                    case 'year':
+                    case 'yearRange':
+                        this.modeOptionInputAttrs.list = {
+                            'day': '時間維度:天',
+                            'month': '時間維度:月',
+                            'year': '時間維度:年',
+                        };
+                        break;
+                    case 'dateRange':
+                    case '7d':
+                    case '14d':
+                    case '30d':
+                    default:
+                        this.modeOptionInputAttrs.list = {
+                            'day': '時間維度:天',
+                        };
+                        break;
+                }
+                this.modeOptionInputAttrs.value = 'day';
+            }
         }
     },
 }

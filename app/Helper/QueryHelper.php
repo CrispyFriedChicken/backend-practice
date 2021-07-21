@@ -32,6 +32,32 @@ class QueryHelper
         }
     }
 
+    public static function getDateString($request, $dateColumn)
+    {
+        $stringLength = 10;
+        if ($request->modeOption) {
+            switch ($request->modeOption) {
+                case 'year':
+                    $stringLength = 4;
+                    break;
+                case 'month':
+                    $stringLength = 7;
+                    break;
+                case 'day':
+                default:
+                    $stringLength = 10;
+                    break;
+                case 'hour':
+                    $stringLength = 13;
+                    break;
+                case 'minute':
+                    $stringLength = 16;
+                    break;
+            }
+        }
+        return "SUBSTRING(`$dateColumn`,1,$stringLength)";
+    }
+
 
     /**
      * 新增查詢條件(值一致)

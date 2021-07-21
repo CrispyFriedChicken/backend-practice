@@ -8,7 +8,7 @@
         <!--條件顯示-->
         <div class="row col-12 mt-2" v-if="isValuesExist(values)">
             <div v-for="(value,key,index) in values">
-                <div v-if="value" :set="attr = getAttr(key,attrs).inputAttrs">
+                <div v-if="value && getAttr(key,attrs)" :set="attr = getAttr(key,attrs).inputAttrs">
                     <span style="font-weight: bolder">{{ attr.title }}：</span>
                     <span>{{ getShowValue(value, attr.list) }}</span>
                     <span v-if="index !== Object.keys(values).length-1">　/　</span>
@@ -47,18 +47,20 @@ export default {
             let attrs = this.attrs;
             let values = this.values;
             $.each(attrs, function (index, attr) {
-                if (attrs && values.hasOwnProperty(attr.inputAttrs.name) && values[attr.inputAttrs.name]) {
+                if (attrs && attr.hasOwnProperty('inputAttrs') && values.hasOwnProperty(attr.inputAttrs.name) && values[attr.inputAttrs.name]) {
                     isShow = true;
                 }
             });
             return isShow;
         },
         getAttr: function (nameKey, myArray) {
+            let result = false;
             for (var i = 0; i < myArray.length; i++) {
-                if (myArray[i].inputAttrs.name === nameKey) {
-                    return myArray[i];
+                if (myArray[i].hasOwnProperty('inputAttrs') && myArray[i].inputAttrs.name === nameKey) {
+                    result = myArray[i];
                 }
             }
+            return result;
         },
         getShowValue: function (value, list) {
             let showString = '';

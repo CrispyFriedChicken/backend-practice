@@ -21,7 +21,7 @@ class ChartHelper
     const FORMAT_NUMBER = 'number';
     const FORMAT_MONEY = 'money';
 
-    public static function getSetting($type, $title, $labels, $datasets, $options = [], $isShowPercentage = true)
+    public static function getSetting($type, $title, $labels, $datasets, $options = [], $isShowPercentage = false)
     {
         return [
             'type' => $type,

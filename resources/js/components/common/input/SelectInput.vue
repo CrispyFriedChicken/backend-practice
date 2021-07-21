@@ -45,7 +45,14 @@ export default {
     watch: {
         value: function () {
             this.childValue = this.value;
-        }
+        },
+        inputAttrs: {
+            handler: function (val, oldVal) {
+                this.list = val.hasOwnProperty('list') ? val.list : {};
+                this.dropDownList = Object.assign({'': this.placeholder}, this.list);
+            },
+            deep: true
+        },
     },
     mounted() {
         this.dropDownList = Object.assign({'': this.placeholder}, this.list);

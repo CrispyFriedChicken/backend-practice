@@ -10,6 +10,7 @@
                 'title' => '下注時間',
                 'name' => 'transactionDate',
                 'dateMode' => 'dateRange',
+                'isShowModeOption' => true,
             ],
         ],
         [

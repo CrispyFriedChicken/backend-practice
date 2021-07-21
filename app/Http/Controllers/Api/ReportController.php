@@ -48,10 +48,11 @@ class ReportController extends Controller
             //折線圖
             $query = DB::table('orders');
             $this->addConditions($query, $request);
-            $transactionDate = DB::raw('SUBSTRING(`transactionDate`,1,10)');
+            $dateString = QueryHelper::getDateString($request, 'transactionDate');
+            $transactionDate = DB::raw($dateString);
             $query->groupBy([$transactionDate]);
             $query->orderBy($transactionDate);
-            $query->select([DB::raw('SUBSTRING(`transactionDate`,1,10) AS transactionDate'), DB::raw('COUNT(uuid) as orderCount'), DB::raw('SUM(stakeCny) as stakeCny'), DB::raw('SUM(stakeCny) - SUM(winningCny) as profitCny')]);
+            $query->select([DB::raw("$dateString AS transactionDate"), DB::raw('COUNT(uuid) as orderCount'), DB::raw('SUM(stakeCny) as stakeCny'), DB::raw('SUM(stakeCny) - SUM(winningCny) as profitCny')]);
             if ($query->count()) {
                 $rows = $query->get();
                 //整理橫列
@@ -105,10 +106,11 @@ class ReportController extends Controller
             //查詢資料
             $query = DB::table('orders');
             $this->addConditions($query, $request);
-            $transactionDate = DB::raw('SUBSTRING(`transactionDate`,1,10)');
+            $dateString = QueryHelper::getDateString($request, 'transactionDate');
+            $transactionDate = DB::raw($dateString);
             $query->groupBy([$transactionDate]);
             $query->orderBy($transactionDate);
-            $query->select([DB::raw('SUBSTRING(`transactionDate`,1,10) AS transactionDate'), DB::raw('COUNT(uuid) as orderCount')]);
+            $query->select([DB::raw("$dateString AS transactionDate"), DB::raw('COUNT(uuid) as orderCount')]);
             if ($query->count()) {
                 $rows = $query->get();
                 //整理橫列
@@ -208,7 +210,7 @@ class ReportController extends Controller
                 //設定圖表資訊
                 $renderSettings[] = ChartHelper::getSetting(ChartHelper::TYPE_PIE_CHART, '贏家', $labels, [
                     ChartHelper::getDatasets('派彩', ChartHelper::getColors($rows), $datas['balanceCny'], [], ChartHelper::FORMAT_MONEY)
-                ], [], false);
+                ]);
             }
         }
 
@@ -230,7 +232,7 @@ class ReportController extends Controller
                 //設定圖表資訊
                 $renderSettings[] = ChartHelper::getSetting(ChartHelper::TYPE_PIE_CHART, '輸家', $labels, [
                     ChartHelper::getDatasets('派彩', ChartHelper::getColors($rows), $datas['balanceCny'], [], ChartHelper::FORMAT_MONEY)
-                ], [], false);
+                ]);
             }
         }
         return $renderSettings;
