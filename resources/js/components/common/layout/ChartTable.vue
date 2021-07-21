@@ -6,7 +6,7 @@
             <td class="text-center">序</td>
             <td class="text-center">名稱</td>
             <td class="text-center">{{ chartdata.datasets[0].label }}</td>
-            <td class="text-center"  v-if="chartdata.isShowPercentage">比例</td>
+            <td class="text-center" v-if="chartdata.isShowPercentage">比例</td>
         </tr>
         </thead>
         <!--表身-->
@@ -35,7 +35,7 @@
                 {{ format(this.valueTotal, chartdata.datasets[0].format) }}
             </td>
             <!--比例-->
-            <td class="text-right"  v-if="chartdata.isShowPercentage">
+            <td class="text-right" v-if="chartdata.isShowPercentage">
                 {{ getPercentage(this.valueTotal) }}
             </td>
         </tr>
@@ -52,12 +52,16 @@ export default {
             valueTotal: 0
         };
     },
+    watch: {
+        chartdata: {
+            handler: function handler(val, oldVal) {
+                this.updateTotal(val);
+            },
+            deep: true
+        }
+    },
     mounted() {
-        let total = 0;
-        this.chartdata.datasets[0].data.forEach(function (dataValue) {
-            total += dataValue;
-        });
-        this.valueTotal = total;
+        this.updateTotal(this.chartdata);
     },
     methods: {
         getPercentage: function (value) {
@@ -65,6 +69,13 @@ export default {
         },
         format(value, filter) {
             return filter ? Vue.filter(filter)(value) : value;
+        },
+        updateTotal: function (data) {
+            let total = 0;
+            data.datasets[0].data.forEach(function (dataValue) {
+                total += dataValue;
+            });
+            this.valueTotal = total;
         },
     },
 

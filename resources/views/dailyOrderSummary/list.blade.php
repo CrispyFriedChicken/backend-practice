@@ -43,8 +43,9 @@
                 'name' => 'sortColumn',
                 'list' => [
                     'transactionDate' => '下注時間',
-                    'stake' => '投注額',
-                    'winning' => '派彩',
+                    'totalWin' => '總贏分',
+                    'bet' => '投注額',
+                    'totalPayout' => '派彩',
                     'currency' => '幣別',
                 ],
             ]
@@ -93,13 +94,18 @@
         ],
         [
             'type' => 'money',
+            'title' => '總贏分',
+            'name' => 'totalWin',
+        ],
+        [
+            'type' => 'money',
             'title' => '總投注',
-            'name' => 'stake',
+            'name' => 'bet',
         ],
         [
             'type' => 'money',
             'title' => '總派彩',
-            'name' => 'winning',
+            'name' => 'totalPayout',
         ],
         [
             'type' => 'link',

@@ -52,15 +52,15 @@ class OrderController extends Controller
             ->select([
                 'type',
                 'currency',
-                DB::raw('SUM(stake) as stake'),
-                DB::raw('SUM(winning) as winning'),
+                DB::raw('SUM(bet) as bet'),
+                DB::raw('SUM(totalPayout) as totalPayout'),
                 DB::raw('COUNT(uuid) as orderCount')
             ])->get();
 
 
         $template = [
-            'winning' => 0,
-            'stake' => 0,
+            'totalPayout' => 0,
+            'bet' => 0,
             'orderCount' => 0,
         ];
 
@@ -78,7 +78,7 @@ class OrderController extends Controller
             if (!isset($summary[$row->type][$row->currency])) {
                 $summary[$row->type][$row->currency] = $template;
             }
-            foreach (['winning', 'stake', 'orderCount'] as $col) {
+            foreach (['totalPayout', 'bet', 'orderCount'] as $col) {
                 $summary[GameType::ALL_TYPE][$row->currency][$col] += $row->$col;
                 $summary[$row->type][$row->currency][$col] += $row->$col;
             }
@@ -90,13 +90,13 @@ class OrderController extends Controller
         $currencyCodeTitleMap = Currency::getCodeTitleMap();
         $showTexts = [];
         foreach ($summary as $type => $currencyCodes) {
-            $stakes = [];
-            $winnings = [];
+            $bets = [];
+            $totalPayouts = [];
             $totalCount = 0;
             foreach ($currencyCodes as $currencyCode => $info) {
                 $currency = $currencyCodeTitleMap[$currencyCode];
-                $stakes[] = $currency . ' $ ' . number_format($info['stake']);
-                $winnings[] = $currency . ' $ ' . number_format($info['winning']);
+                $bets[] = $currency . ' $ ' . number_format($info['bet']);
+                $totalPayouts[] = $currency . ' $ ' . number_format($info['totalPayout']);
                 $totalCount += $info['orderCount'];
             }
             $isShowText = $type == GameType::ALL_TYPE ? count($showTexts) > 1 : $totalCount > 0;
@@ -104,8 +104,8 @@ class OrderController extends Controller
                 $showTexts[] = [
                     'title' => $gameTypeCodeTitleMap[$type],
                     'texts' => [
-                        '總投注額 : ' . implode($stakes, "　/　"),
-                        '總派彩 : ' . implode($winnings, "　/　"),
+                        '總投注額 : ' . implode($bets, "　/　"),
+                        '總派彩 : ' . implode($totalPayouts, "　/　"),
                         '總訂單數 : ' . number_format($totalCount)
                     ],
                 ];

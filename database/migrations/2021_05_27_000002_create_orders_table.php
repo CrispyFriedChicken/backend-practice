@@ -28,10 +28,12 @@ class CreateOrdersTable extends Migration
                 $table->integer('type')->default(-1)->comment('遊戲類型');
                 $table->string('email')->comment('信箱(帳號)');
                 $table->integer('currency')->default(-1)->comment('幣別');
-                $table->double('stake')->default(0)->comment('投注額(原幣別)');
-                $table->double('stakeCny')->default(0)->comment('投注額(人民幣)');
-                $table->double('winning')->default(0)->comment('派彩(原幣別)');
-                $table->double('winningCny')->default(0)->comment('派彩(人民幣)');
+                $table->double('totalWin')->default(0)->comment('總贏分(原幣別)');
+                $table->double('totalWinCny')->default(0)->comment('總贏分(人民幣)');
+                $table->double('bet')->default(0)->comment('投注額(原幣別)');
+                $table->double('betCny')->default(0)->comment('投注額(人民幣)');
+                $table->double('totalPayout')->default(0)->comment('總派彩(原幣別)');
+                $table->double('totalPayoutCny')->default(0)->comment('總派彩(人民幣)');
                 $table->double('exchangeRate')->default(0)->comment('匯率(原幣別)');
                 $table->double('exchangeRateCny')->default(0)->comment('匯率(人民幣)');
                 $table->timestamp('createdAt')->nullable();

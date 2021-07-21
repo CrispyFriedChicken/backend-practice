@@ -28,16 +28,16 @@ class ReportController extends Controller
             $this->addConditions($query, $request);
             $query->groupBy(['code']);
             $query->orderBy('code');
-            $query->select(['code', DB::raw('SUM(stakeCny) as stakeCny'), DB::raw('SUM(stakeCny) - SUM(winningCny) as profitCny')]);
+            $query->select(['code', DB::raw('SUM(betCny) as betCny'), DB::raw('SUM(totalPayoutCny) * -1 as profitCny')]);
             if ($query->count()) {
                 $rows = $query->get();
                 //整理橫列
                 $labels = ChartHelper::getLabels($rows, 'code', GamesEnum::getCodeChineseNameMap());
                 //整理檔案
-                $datas = ChartHelper::getDatas($rows, ['stakeCny', 'profitCny']);
+                $datas = ChartHelper::getDatas($rows, ['betCny', 'profitCny']);
                 //設定圖表資訊
                 $renderSettings[] = ChartHelper::getSetting(ChartHelper::TYPE_BAR_CHART, '長條圖', $labels, [
-                    ChartHelper::getDatasets('投注額', ChartHelper::COLOR_RED, $datas['stakeCny']),
+                    ChartHelper::getDatasets('投注額', ChartHelper::COLOR_RED, $datas['betCny']),
                     ChartHelper::getDatasets('損益', ChartHelper::COLOR_BLUE, $datas['profitCny']),
                 ]);
             }
@@ -52,17 +52,17 @@ class ReportController extends Controller
             $transactionDate = DB::raw($dateString);
             $query->groupBy([$transactionDate]);
             $query->orderBy($transactionDate);
-            $query->select([DB::raw("$dateString AS transactionDate"), DB::raw('COUNT(uuid) as orderCount'), DB::raw('SUM(stakeCny) as stakeCny'), DB::raw('SUM(stakeCny) - SUM(winningCny) as profitCny')]);
+            $query->select([DB::raw("$dateString AS transactionDate"), DB::raw('COUNT(uuid) as orderCount'), DB::raw('SUM(betCny) as betCny'), DB::raw('SUM(totalPayoutCny) * -1 as profitCny')]);
             if ($query->count()) {
                 $rows = $query->get();
                 //整理橫列
                 $labels = ChartHelper::getLabels($rows, 'transactionDate');
                 //整理檔案
-                $datas = ChartHelper::getDatas($rows, ['stakeCny', 'profitCny']);
+                $datas = ChartHelper::getDatas($rows, ['betCny', 'profitCny']);
                 //設定圖表資訊
                 if (count($rows)) {
                     $renderSettings[] = ChartHelper::getSetting(ChartHelper::TYPE_LINE_CHART, '折線圖', $labels, [
-                        ChartHelper::getDatasets('投注額', ChartHelper::COLOR_RED, $datas['stakeCny'], ['fill' => false, 'borderColor' => ChartHelper::COLOR_RED]),
+                        ChartHelper::getDatasets('投注額', ChartHelper::COLOR_RED, $datas['betCny'], ['fill' => false, 'borderColor' => ChartHelper::COLOR_RED]),
                         ChartHelper::getDatasets('損益', ChartHelper::COLOR_GREEN, $datas['profitCny'], ['fill' => false, 'borderColor' => ChartHelper::COLOR_BLUE]),
 
                     ]);
@@ -142,8 +142,8 @@ class ReportController extends Controller
             $query = DB::table('orders');
             $this->addConditions($query, $request);
             $query->groupBy(['code']);
-            $query->orderBy(DB::raw('SUM(stakeCny) - SUM(winningCny)'), 'desc');
-            $query->select(['code', DB::raw('SUM(stakeCny) - SUM(winningCny) as profitCny')]);
+            $query->orderBy(DB::raw('SUM(totalPayoutCny) * -1'), 'desc');
+            $query->select(['code', DB::raw('SUM(totalPayoutCny) * -1 as profitCny')]);
             $query->limit(10);
             if ($query->count()) {
                 $rows = $query->get();
@@ -198,18 +198,18 @@ class ReportController extends Controller
             $query = DB::table('orders');
             $this->addConditions($query, $request);
             $query->groupBy(['email']);
-            $query->orderBy(DB::raw('SUM(winningCny) - SUM(stakeCny)'), 'desc');
-            $query->select(['email', DB::raw('SUM(winningCny) - SUM(stakeCny) as balanceCny')]);
+            $query->orderBy(DB::raw('SUM(totalPayoutCny)'), 'desc');
+            $query->select(['email', DB::raw('SUM(totalPayoutCny) as totalPayoutCny')]);
             $query->limit(10);
             if ($query->count()) {
                 $rows = $query->get();
                 //整理橫列
                 $labels = ChartHelper::getLabels($rows, 'email', $playerMap);
                 //整理檔案
-                $datas = ChartHelper::getDatas($rows, ['balanceCny']);
+                $datas = ChartHelper::getDatas($rows, ['totalPayoutCny']);
                 //設定圖表資訊
                 $renderSettings[] = ChartHelper::getSetting(ChartHelper::TYPE_PIE_CHART, '贏家', $labels, [
-                    ChartHelper::getDatasets('派彩', ChartHelper::getColors($rows), $datas['balanceCny'], [], ChartHelper::FORMAT_MONEY)
+                    ChartHelper::getDatasets('派彩', ChartHelper::getColors($rows), $datas['totalPayoutCny'], [], ChartHelper::FORMAT_MONEY)
                 ]);
             }
         }
@@ -220,18 +220,18 @@ class ReportController extends Controller
             $query = DB::table('orders');
             $this->addConditions($query, $request);
             $query->groupBy(['email']);
-            $query->orderBy(DB::raw('SUM(winningCny) - SUM(stakeCny)'));
-            $query->select(['email', DB::raw('SUM(winningCny) - SUM(stakeCny) as balanceCny')]);
+            $query->orderBy(DB::raw('SUM(totalPayoutCny)'));
+            $query->select(['email', DB::raw('SUM(totalPayoutCny) as totalPayoutCny')]);
             $query->limit(10);
             if ($query->count()) {
                 $rows = $query->get();
                 //整理橫列
                 $labels = ChartHelper::getLabels($rows, 'email', $playerMap);
                 //整理檔案
-                $datas = ChartHelper::getDatas($rows, ['balanceCny']);
+                $datas = ChartHelper::getDatas($rows, ['totalPayoutCny']);
                 //設定圖表資訊
                 $renderSettings[] = ChartHelper::getSetting(ChartHelper::TYPE_PIE_CHART, '輸家', $labels, [
-                    ChartHelper::getDatasets('派彩', ChartHelper::getColors($rows), $datas['balanceCny'], [], ChartHelper::FORMAT_MONEY)
+                    ChartHelper::getDatasets('派彩', ChartHelper::getColors($rows), $datas['totalPayoutCny'], [], ChartHelper::FORMAT_MONEY)
                 ]);
             }
         }

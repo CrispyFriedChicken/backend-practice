@@ -28,10 +28,12 @@ class OrderResource extends JsonResource
             'code' => $this->code,
             'email' => $this->email,
             'currency' => $this->currency,
-            'stake' => round($this->stake),
-            'winning' => round($this->winning),
-            'stakeCny' => round($this->stakeCny),
-            'winningCny' => round($this->winningCny),
+            'totalWin' => round($this->totalWin),
+            'bet' => round($this->bet),
+            'totalPayout' => round($this->totalPayout),
+            'totalWinCny' => round($this->totalWinCny),
+            'betCny' => round($this->betCny),
+            'totalPayoutCny' => round($this->totalPayoutCny),
             'showTitle' => "注單編號 「 $this->orderSerial 」",
         ];
     }

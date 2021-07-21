@@ -20,8 +20,9 @@ class CreateDailyOrderSummaryTable extends Migration
                 $table->integer('currency')->default(-1)->comment('幣別');
                 $table->string('transactionDate', 24)->default('')->comment('結算日期');
                 $table->integer('orderCount')->default(0)->comment('總單量');
-                $table->double('stake')->default(0)->comment('總投注額');
-                $table->double('winning')->default(0)->comment('總派彩');
+                $table->double('totalWin')->default(0)->comment('總贏分');
+                $table->double('bet')->default(0)->comment('總投注額');
+                $table->double('totalPayout')->default(0)->comment('總派彩');
                 $table->timestamp('createdAt')->nullable();
                 $table->timestamp('updatedAt')->nullable();
             });

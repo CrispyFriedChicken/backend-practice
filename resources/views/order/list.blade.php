@@ -77,8 +77,9 @@
                 'name' => 'sortColumn',
                 'list' => [
                     'transactionDate' => '下注時間',
-                    'stakeCny' => '投注額',
-                    'winningCny' => '派彩',
+                    'totalWinCny' => '總贏分',
+                    'betCny' => '投注額',
+                    'totalPayoutCny' => '派彩',
                 ],
             ]
         ],
@@ -136,23 +137,33 @@
         ],
         [
             'type' => 'money',
+            'title' => '總贏分',
+            'name' => 'totalWin',
+        ],
+        [
+            'type' => 'money',
             'title' => '投注額',
-            'name' => 'stake',
+            'name' => 'bet',
         ],
         [
             'type' => 'money',
             'title' => '派彩',
-            'name' => 'winning',
+            'name' => 'totalPayout',
+        ],
+        [
+            'type' => 'money',
+            'title' => '總贏分(人民幣)',
+            'name' => 'totalWinCny',
         ],
         [
             'type' => 'money',
             'title' => '投注額(人民幣)',
-            'name' => 'stakeCny',
+            'name' => 'betCny',
         ],
         [
             'type' => 'money',
             'title' => '派彩(人民幣)',
-            'name' => 'winningCny',
+            'name' => 'totalPayoutCny',
         ],
     ]);
     $defaultFields = [

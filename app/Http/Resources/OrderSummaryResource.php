@@ -22,8 +22,9 @@ class OrderSummaryResource extends JsonResource
         $currencyCodeTitleMap = Currency::getCodeTitleMap();
         $dateString = date('Ymd', strtotime($this->transactionDate));
         return [
-            'stake' => $this->stake,
-            'winning' => $this->winning,
+            'totalWin' => $this->totalWin,
+            'bet' => $this->bet,
+            'totalPayout' => $this->totalPayout,
             'type' => $this->type,
             'transactionDate' => $this->transactionDate,
             'orderCount' => $this->orderCount,

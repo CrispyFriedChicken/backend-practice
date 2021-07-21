@@ -17,36 +17,39 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $currency
  * @property string $transactionDate
  * @property int $orderCount
- * @property float $stake
- * @property float $winning
+ * @property float $totalWin
+ * @property float $bet
+ * @property float $totalPayout
  * @property Carbon|null $createdAt
  * @property Carbon|null $updatedAt
  * @package App\Models
  * @method static \Illuminate\Database\Eloquent\Builder|DailyOrderSummary newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|DailyOrderSummary newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|DailyOrderSummary query()
+ * @method static \Illuminate\Database\Eloquent\Builder|DailyOrderSummary whereBet($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DailyOrderSummary whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DailyOrderSummary whereCurrency($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DailyOrderSummary whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DailyOrderSummary whereOrderCount($value)
- * @method static \Illuminate\Database\Eloquent\Builder|DailyOrderSummary whereStake($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|DailyOrderSummary whereTotalPayout($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|DailyOrderSummary whereTotalWin($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DailyOrderSummary whereTransactionDate($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DailyOrderSummary whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DailyOrderSummary whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|DailyOrderSummary whereWinning($value)
  * @mixin \Eloquent
  */
 class DailyOrderSummary extends Model
 {
 	protected $table = 'dailyOrderSummary';
-    const CREATED_AT = 'createdAt';
-    const UPDATED_AT = 'updatedAt';
+	public $timestamps = false;
+
 	protected $casts = [
-        'type' => 'int',
-        'currency' => 'int',
+		'type' => 'int',
+		'currency' => 'int',
 		'orderCount' => 'int',
-		'stake' => 'float',
-		'winning' => 'float'
+		'totalWin' => 'float',
+		'bet' => 'float',
+		'totalPayout' => 'float'
 	];
 
 	protected $dates = [
@@ -59,8 +62,9 @@ class DailyOrderSummary extends Model
 		'currency',
 		'transactionDate',
 		'orderCount',
-		'stake',
-		'winning',
+		'totalWin',
+		'bet',
+		'totalPayout',
 		'createdAt',
 		'updatedAt'
 	];
