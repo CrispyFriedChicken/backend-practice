@@ -54,7 +54,7 @@
         'transactionDate' => [$dateStart, $dateEnd],
     ];
     $remark = [
-        'content' => '目前頁面上顯示的金額幣別皆為人民幣(其他幣別會以當天匯率換算成人民幣)',
+        'content' => '目前頁面上顯示的金額幣別皆為人民幣(其他幣別會以注單生成時的匯率換算成人民幣)',
         'class' => 'ml-0 alert alert-warning',
     ];
     ?>

@@ -99,11 +99,13 @@ class OrderHelper
                 if (!isset($summary[$type][$row['currency']])) {
                     $summary[$type][$row['currency']] = [
                         'bet' => 0,
+                        'totalWin' => 0,
                         'totalPayout' => 0,
                         'orderCount' => 0,
                         'rows' => [],
                     ];
                 }
+                $summary[$type][$row['currency']]['totalWin'] += $row['totalWin'];
                 $summary[$type][$row['currency']]['bet'] += $row['bet'];
                 $summary[$type][$row['currency']]['totalPayout'] += $row['totalPayout'];
                 $summary[$type][$row['currency']]['orderCount']++;
@@ -130,7 +132,7 @@ class OrderHelper
                 $dailyOrderSummary = new DailyOrderSummary();
                 $dailyOrderSummary->type = $type;
                 $dailyOrderSummary->currency = $currency;
-                foreach (['bet','totalWin', 'totalPayout', 'orderCount'] as $col) {
+                foreach (['bet', 'totalWin', 'totalPayout', 'orderCount'] as $col) {
                     $dailyOrderSummary->$col = $row[$col];
                 }
                 $dailyOrderSummary->transactionDate = $date;
