@@ -3,6 +3,7 @@ services:
 # laravel app
   app:
     container_name: laravel_app
+    restart: always
     depends_on:
       - "database"
     build:
@@ -32,6 +33,7 @@ services:
     container_name: nginx_server
     depends_on:
       - "app"
+    restart: always
     build:
       context: ./
       dockerfile: development/web.dockerfile
@@ -45,6 +47,7 @@ services:
   database:
     container_name: mysql_database
     image: mysql:5.7
+    restart: always
     volumes:
       - dbdata:/var/lib/mysql
     environment:
