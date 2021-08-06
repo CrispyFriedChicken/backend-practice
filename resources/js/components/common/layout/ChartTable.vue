@@ -1,5 +1,5 @@
 <template>
-    <table class='table  table-bordered table-condensed table-hover ' style="width:auto;">
+    <table class='table  table-bordered table-condensed table-hover table-responsive-sm' style="width:auto;">
         <!--表頭-->
         <thead>
         <tr>

@@ -34,10 +34,10 @@
                     <bar-chart v-if="reportSetting['type'] === 'Bar'" :chartdata-setting="reportSetting['chartdata']" :option-setting="reportSetting['option']"></bar-chart>
                     <line-chart v-if="reportSetting['type'] === 'Line'" :chartdata-setting="reportSetting['chartdata']" :option-setting="reportSetting['option']"></line-chart>
                     <div v-if="reportSetting['type'] === 'Pie'" class="row">
-                        <div  class="col-6">
+                        <div  class="col-md-6 col-12">
                             <pie-chart  :chartdata-setting="reportSetting['chartdata']" :option-setting="reportSetting['option']"></pie-chart>
                         </div>
-                        <div class="col-6">
+                        <div class="col-md-6 col-12">
                             <chart-table :chartdata="reportSetting['chartdata']"></chart-table>
                         </div>
                     </div>

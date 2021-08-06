@@ -154,7 +154,7 @@ class ReportController extends Controller
                 //設定圖表資訊
                 $renderSettings[] = ChartHelper::getSetting(ChartHelper::TYPE_PIE_CHART, '總損益前10名遊戲', $labels, [
                     ChartHelper::getDatasets('損益', ChartHelper::getColors($rows), $datas['profitCny'], [], ChartHelper::FORMAT_MONEY)
-                ]);
+                ], [], true);
             }
         }
 
@@ -176,7 +176,7 @@ class ReportController extends Controller
                 //設定圖表資訊
                 $renderSettings[] = ChartHelper::getSetting(ChartHelper::TYPE_PIE_CHART, '總單量前10名遊戲', $labels, [
                     ChartHelper::getDatasets('單量', ChartHelper::getColors($rows), $datas['orderCount'], [], ChartHelper::FORMAT_NUMBER)
-                ]);
+                ], [], true);
             }
         }
         return $renderSettings;
@@ -210,7 +210,7 @@ class ReportController extends Controller
                 //設定圖表資訊
                 $renderSettings[] = ChartHelper::getSetting(ChartHelper::TYPE_PIE_CHART, '贏家', $labels, [
                     ChartHelper::getDatasets('派彩', ChartHelper::getColors($rows), $datas['totalPayoutCny'], [], ChartHelper::FORMAT_MONEY)
-                ]);
+                ], [], true);
             }
         }
 
@@ -232,7 +232,7 @@ class ReportController extends Controller
                 //設定圖表資訊
                 $renderSettings[] = ChartHelper::getSetting(ChartHelper::TYPE_PIE_CHART, '輸家', $labels, [
                     ChartHelper::getDatasets('派彩', ChartHelper::getColors($rows), $datas['totalPayoutCny'], [], ChartHelper::FORMAT_MONEY)
-                ]);
+                ], [], true);
             }
         }
         return $renderSettings;
